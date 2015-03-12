@@ -9,3 +9,4 @@ class CFGNodeTypes(Enum):
     WHILE = 6
     DO_WHILE = 7
     PSEUDO = 8
+    CALL = 9
