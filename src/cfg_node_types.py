@@ -1,6 +1,4 @@
-from enum import Enum
-
-class CFGNodeTypes(Enum):
+class CFGNodeTypes():
     COMMON = 1
     IF = 2
     ELSE = 3
