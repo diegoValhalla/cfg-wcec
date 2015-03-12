@@ -1,4 +1,4 @@
-from cfg_node_types import CFGNodeTypes
+from cfg_node_type import CFGNodeType
 
 class CFGEntryNode(object):
     """ Class to store initial data from function
@@ -28,7 +28,7 @@ class CFGNode(object):
         code were wrapped in this node.
     """
     def __init__(self, type):
-        self._type = _type
+        self._type = type
         self._start_line = -1
         self._end_line = -1
         self._loop_iters = -1

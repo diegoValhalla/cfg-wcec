@@ -1,4 +1,4 @@
-class CFGNodeTypes():
+class CFGNodeType():
     COMMON = 1
     IF = 2
     ELSE = 3
