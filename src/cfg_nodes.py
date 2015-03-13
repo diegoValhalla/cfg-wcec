@@ -1,4 +1,7 @@
+import sys
+
 from cfg_node_type import CFGNodeType
+
 
 class CFGEntryNode(object):
     """ Class to store initial data from function
@@ -15,6 +18,12 @@ class CFGEntryNode(object):
 
     def get_func_first_node(self):
         return self._func_first_node
+
+    def show(self, buf=sys.stdout, indent=2):
+        lead = ' ' * indent
+        buf.write((lead + 'entry point - %s\n') % self._func_name)
+        if isinstance(self._func_first_node, CFGNode):
+            self._func_first_node.show(buf=buf, lead=lead)
 
 
 class CFGNode(object):
@@ -38,6 +47,9 @@ class CFGNode(object):
         self._rwcec = 0
         self._children = []
         self._ast_elem_list = []
+
+    def set_type(self, type):
+        self._type = type
 
     def get_type(self):
         return self._type
@@ -118,3 +130,11 @@ class CFGNode(object):
 
     def get_ast_elem_list(self):
         return self._ast_elem_list
+
+    def show(self, buf=sys.stdout, indent=1, lead=''):
+        lead += ' ' * indent
+        buf.write((lead + '- %s, %d\n')
+                % (self._type.lower(), self._start_line))
+
+        for child in self._children:
+            child.show(buf, indent, lead + '|')
