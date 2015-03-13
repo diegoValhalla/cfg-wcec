@@ -3,6 +3,7 @@ class CFGNodeType():
     IF = "IF"
     ELSE = "ELSE"
     ELSE_IF = "ELSE_IF"
+    END_IF = "END_IF"
     FOR = "FOR"
     WHILE = "WHILE"
     DO_WHILE = "DO_WHILE"
