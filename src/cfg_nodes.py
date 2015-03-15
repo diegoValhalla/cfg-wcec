@@ -66,12 +66,11 @@ class CFGNode(object):
     def get_end_line(self):
         return self._end_line
 
-    def set_call_func(self, name, entry_node):
+    def set_call_func_name(self, name):
         """ Keep function name and node that are called
             by the current node.
         """
         self._call_func_name = name
-        self.set_reference_node(entry_node)
 
     def get_call_func_name(self):
         return self._call_func_name
