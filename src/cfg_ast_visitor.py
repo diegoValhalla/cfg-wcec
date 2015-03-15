@@ -91,7 +91,7 @@ class CFGAstVisitor(object):
 
         cond_node = CFGNode(CFGNodeType.IF)
         cond_node.set_start_line(n.coord.line)
-        self._current_node.add_child(cond_node)
+        self._add_new_node(cond_node)
         self._current_node = cond_node
         self._create_new_node = False
         self.visit(n.cond) # a function call can be presented in condition
@@ -120,6 +120,14 @@ class CFGAstVisitor(object):
         self._current_node = end_node
         self._create_new_node = True
 
+    def visit_FuncCall(self, n):
+        call_node = CFGNode(CFGNodeType.CALL)
+        call_node.set_start_line(n.coord.line)
+        call_node.set_call_func_name(n.name)
+        self._add_new_node(call_node)
+        self._current_node = call_node
+        self._create_new_node = True
+
     def generic_visit(self, n):
         """ Called if no explicit visitor function exists for a
             node. Implements preorder visiting of the node.
@@ -132,24 +140,24 @@ class CFGAstVisitor(object):
         if self._create_new_node:
             new_node = CFGNode(CFGNodeType.COMMON)
             new_node.set_start_line(ast_elem.coord.line)
-
-            # there is a previous node being updated
-            if isinstance(self._current_node, CFGNode):
-                self._current_node.add_child(new_node)
-
+            self._add_new_node(new_node)
             self._current_node = new_node
             self._create_new_node = False
-
-            if self._is_first_node:
-                entry_node = CFGEntryNode(self._current_func_name,
-                        self._current_node)
-                self._add_entry_node(entry_node)
-                self._is_first_node = False
 
         # an AST element should be added
         # only when there is a valid node
         if isinstance(self._current_node, CFGNode):
             self._current_node.add_ast_elem(ast_elem)
+
+    def _add_new_node(self, new):
+        # there is a previous node being updated
+        if isinstance(self._current_node, CFGNode):
+            self._current_node.add_child(new)
+
+        if self._is_first_node:
+            entry_node = CFGEntryNode(self._current_func_name, new)
+            self._add_entry_node(entry_node)
+            self._is_first_node = False
 
     def _add_child_case_if(self, cond_node, iftrue_last_node,
             iffalse_last_node, end_node):
@@ -192,8 +200,7 @@ class CFGAstVisitor(object):
                     rp_id = n_id
                     break
 
-            if rp_node == None:
-                break
+            if rp_node == None: break
 
             # end node points to only one child,
             # so replace it
