@@ -132,8 +132,16 @@ class CFGNode(object):
 
     def show(self, buf=sys.stdout, indent=1, lead=''):
         lead += ' ' * indent
-        buf.write((lead + '- %s, %d\n')
-                % (self._type.lower(), self._start_line))
+        msg = (lead + '- %s, %d\n') % (self._type.lower(), self._start_line)
+        buf.write(msg)
+
+        if self._type == CFGNodeType.PSEUDO:
+            self._reference_node.show(buf, indent, lead + '|') # write loop
 
         for child in self._children:
-            child.show(buf, indent, lead + '|')
+            if child.get_type() == CFGNodeType.WHILE:
+                msg = ((lead + '- %s, %d\n')
+                        % (child.get_type().lower(), child.get_start_line()))
+                buf.write(msg)
+            else:
+                child.show(buf, indent, lead + '|')

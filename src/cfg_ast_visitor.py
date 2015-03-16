@@ -128,6 +128,34 @@ class CFGAstVisitor(object):
         self._current_node = call_node
         self._create_new_node = True
 
+    def visit_While(self, n):
+        if n.cond is None: return
+
+        pseudo = CFGNode(CFGNodeType.PSEUDO)
+        pseudo.set_start_line(n.coord.line)
+        self._add_new_node(pseudo)
+
+        # while-cond
+        cond = CFGNode(CFGNodeType.WHILE)
+        cond.set_start_line(n.coord.line)
+        self._current_node = cond
+        self._create_new_node = False
+        self.visit(n.cond) # a function call can be presented in condition
+
+        # while-stmt
+        self._current_node = cond
+        self._create_new_node = True
+        if n.stmt is not None: self.visit(n.stmt)
+
+        # get all stmt nodes without child and point them to while-cond
+        self._make_loop_cycle(cond, cond)
+
+        # pseudo:   reference -> while-cond
+        #           child -> other CFG nodes
+        pseudo.set_reference_node(cond)
+        self._current_node = pseudo
+        self._create_new_node = True
+
     def generic_visit(self, n):
         """ Called if no explicit visitor function exists for a
             node. Implements preorder visiting of the node.
@@ -186,6 +214,12 @@ class CFGAstVisitor(object):
                 if else_node.get_type() == CFGNodeType.IF:
                     else_node.set_type(CFGNodeType.ELSE_IF)
 
+    def _make_loop_cycle(self, cond, child):
+        if child.get_children() == []:
+            child.add_child(cond)
+        else:
+            for c in child.get_children():
+                self._make_loop_cycle(cond, c)
     def _clean_graph(self):
         for entry_node in self._entry_nodes:
             self._clean_node(entry_node.get_func_first_node())
