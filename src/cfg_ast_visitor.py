@@ -1,6 +1,6 @@
 from pycparser import c_parser, c_ast
 
-from cfg_node_type import CFGNodeType
+from cfg_nodes import CFGNodeType
 from cfg_nodes import CFGEntryNode
 from cfg_nodes import CFGNode
 

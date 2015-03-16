@@ -1,6 +1,17 @@
 import sys
 
-from cfg_node_type import CFGNodeType
+
+class CFGNodeType():
+    COMMON = "COMMON"
+    IF = "IF"
+    ELSE = "ELSE"
+    ELSE_IF = "ELSE_IF"
+    END_IF = "END_IF"
+    FOR = "FOR"
+    WHILE = "WHILE"
+    DO_WHILE = "DO_WHILE"
+    PSEUDO = "PSEUDO"
+    CALL = "CALL"
 
 
 class CFGEntryNode(object):
