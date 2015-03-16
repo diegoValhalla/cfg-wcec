@@ -1,0 +1,18 @@
+  entry point - main
+   - common, 6
+   | - call, 8
+   | | - if, 10
+   | | | - common, 11
+   | | | | - call, 12
+   | | | | | - if, 15
+   | | | | | | - call, 16
+   | | | | | | | - common, 17
+   | | | | | | | | - common, 22
+   | | | | | | - call, 19
+   | | | | | | | - common, 22
+   | | | - if, 15
+   | | | | - call, 16
+   | | | | | - common, 17
+   | | | | | | - common, 22
+   | | | | - call, 19
+   | | | | | - common, 22
