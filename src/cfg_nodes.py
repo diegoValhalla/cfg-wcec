@@ -50,10 +50,12 @@ class CFGNode(object):
     def __init__(self, type):
         self._type = type
         self._start_line = -1
-        self._end_line = -1
-        self._loop_iters = -1
+        self._end_line = 0
+        self._func_owner = None
         self._call_func_name = None
         self._reference_node = None
+        self._loop_wcec = 0
+        self._loop_iters = 0
         self._wcec = 0
         self._rwcec = 0
         self._children = []
@@ -77,6 +79,12 @@ class CFGNode(object):
     def get_end_line(self):
         return self._end_line
 
+    def set_func_owner(self, name):
+        self._func_owner = name
+
+    def get_func_owner(self):
+        return self._func_owner
+
     def set_call_func_name(self, name):
         """ Keep function name and node that are called
             by the current node.
@@ -96,6 +104,10 @@ class CFGNode(object):
 
     def get_reference_node(self):
         return self._reference_node
+
+    def get_loop_wcec(self):
+        if self._loop_iters == 0: return 0
+        return self._wcec / self._loop_iters
 
     def set_loop_iters(self, iters):
         self._loop_iters = iters
@@ -151,7 +163,7 @@ class CFGNode(object):
 
         for child in self._children:
             if child.get_type() == CFGNodeType.WHILE:
-                msg = ((lead + '- %s, %d\n')
+                msg = ((lead + '| - %s, %d\n')
                         % (child.get_type().lower(), child.get_start_line()))
                 buf.write(msg)
             else:

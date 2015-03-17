@@ -32,11 +32,11 @@ class TestCall(unittest.TestCase):
             cfg.show(buf=f)
 
         test_assert = False
-        with open(result_check, 'rU') as check_file:
+        with open(result_check, 'rU') as check_file,\
+                open(result_ok, 'rU') as ok_file:
             check = check_file.read()
-            with open(result_ok, 'rU') as ok_file:
-                ok = ok_file.read()
-                test_assert = (check == ok)
+            ok = ok_file.read()
+            test_assert = (check == ok)
 
         self.assertTrue(test_assert)
         os.remove(result_check)
