@@ -99,7 +99,7 @@ class CFG2Graphml(object):
                             entry.get_func_first_node(), 0, 0)
 
         xml_graph.set('id', 'graph')
-        xml_graph.set('parse.nodes', str(len(self._node_ids.keys())))
+        xml_graph.set('parse.nodes', str(len(self._node_ids)))
         xml_graph.set('parse.edges', str(edges))
         xml_graph.set('parse.order', 'free')
         xml_graph.set('edgedefault', 'directed')
@@ -118,13 +118,13 @@ class CFG2Graphml(object):
         # explore loop if current node is PSEUDO
         if n.get_type() == CFGNodeType.PSEUDO:
             self._write_node(xml_graph, fname, fid, n.get_reference_node(),
-                    len(self._node_ids.keys()))
+                    len(self._node_ids))
 
         # explore node children that were not visit yet
         for child in n.get_children():
-            if self._node_ids.get(id(child), None) is None:
+            if id(child) not in self._node_ids:
                 self._write_node(xml_graph, fname, fid, child,
-                        len(self._node_ids.keys()))
+                        len(self._node_ids))
 
     def _write_node_xml(self, xml_graph, fid, n, nid):
         # create node tag
@@ -197,15 +197,15 @@ class CFG2Graphml(object):
         if n.get_type() == CFGNodeType.PSEUDO:
             loop_node = n.get_reference_node()
             eid = self._write_edge(xml_graph, fid, loop_node,
-                    len(self._node_ids.keys()), eid)
+                    len(self._node_ids), eid)
             self._write_edge_xml(xml_graph, fid, eid, n, nid, loop_node)
             eid += 1
 
         # write node children that were not visit yet
         for child in n.get_children():
-            if self._node_ids.get(id(child), None) is None:
+            if id(child) not in self._node_ids:
                 eid = self._write_edge(xml_graph, fid, child,
-                        len(self._node_ids.keys()), eid)
+                        len(self._node_ids), eid)
             self._write_edge_xml(xml_graph, fid, eid, n, nid, child)
             eid += 1
 

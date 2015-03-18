@@ -158,8 +158,8 @@ class CFGNode(object):
     def show(self, buf=sys.stdout, indent=1, lead=''):
         lead += ' ' * indent
 
-        msg = (lead + '- %s, %d\n') % (self.get_type().lower(),
-                self.get_start_line())
+        msg = ((lead + '- %s, %d\n')
+                % (self.get_type().lower(), self.get_start_line()))
         buf.write(msg)
 
         if self._type == CFGNodeType.PSEUDO:
