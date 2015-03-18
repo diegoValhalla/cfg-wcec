@@ -30,7 +30,6 @@ class CFGAstVisitor(object):
     def _init_vars(self):
         self._current_func_name = None
         self._current_node = None
-        self._init_entry_node = False
         self._create_new_node = False
         self._is_first_node = True
 
@@ -65,19 +64,11 @@ class CFGAstVisitor(object):
                 self.visit(ext)
 
     def visit_FuncDef(self, n):
-        """ Start visiting function declaration and its statements
+        """ Get function name and explore its statements
         """
-        self._init_entry_node = True
-        self.visit(n.decl)
+        if isinstance(n.decl, c_ast.Decl):
+            self._current_func_name = n.decl.name
         self.visit(n.body)
-        #print '%s %s' % (self.visit_FuncDef.__name__, self._current_func_name)
-
-    def visit_Decl(self, n):
-        """ Get function name
-        """
-        if self._init_entry_node:
-            self._current_func_name = n.name
-            self._init_entry_node = False
 
     def visit_Compound(self, n):
         """ A new block was found and must be created a node for it
@@ -125,7 +116,10 @@ class CFGAstVisitor(object):
     def visit_FuncCall(self, n):
         call_node = CFGNode(CFGNodeType.CALL)
         call_node.set_func_owner(self._current_func_name)
-        call_node.set_call_func_name(n.name)
+        if isinstance(n.name, c_ast.ID):
+            call_node.set_call_func_name(n.name.name)
+        else:
+            call_node.set_call_func_name(None)
         call_node.add_ast_elem(n)
         self._add_new_node(call_node)
         self._current_node = call_node
