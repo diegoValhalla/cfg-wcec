@@ -1,6 +1,4 @@
-import sys, os
-
-from pycparser import c_parser, c_ast
+import sys
 
 from cfg_ast_visitor import CFGAstVisitor
 
@@ -37,24 +35,3 @@ class CFG(object):
     def show(self, buf=sys.stdout):
         for entry_point in self.get_entry_nodes():
             entry_point.show(buf=buf)
-
-
-#############################
-
-if __name__ == '__main__':
-
-    # get test
-    testdir = os.path.dirname(__file__)
-    name = os.path.join(testdir, 'test.c')
-    text = ''
-    with open(name, 'rU') as f:
-        text = f.read()
-
-    # run pycparser
-    parser = c_parser.CParser()
-    ast = parser.parse(text, filename=name)
-    ast.show(showcoord=True)
-
-    # create CFG
-    cfg = CFG(ast)
-    cfg.show()
