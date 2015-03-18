@@ -156,7 +156,7 @@ class CFGAstVisitor(object):
 
         # pseudo:   reference -> while-cond
         #           child -> other CFG nodes
-        pseudo.set_reference_node(cond)
+        pseudo.set_ref_node(cond)
         self._current_node = pseudo
         self._create_new_node = True
 

@@ -55,7 +55,7 @@ class CFGNode(object):
         self._end_line = 0
         self._func_owner = None
         self._call_func_name = None
-        self._reference_node = None
+        self._ref_node = None
         self._loop_wcec = 0
         self._loop_iters = 0
         self._wcec = 0
@@ -96,16 +96,16 @@ class CFGNode(object):
     def get_call_func_name(self):
         return self._call_func_name
 
-    def set_reference_node(self, node):
+    def set_ref_node(self, node):
         """ Reference node should be used by CALL or
             PSEUDO nodes to know the function or loop
             it is pointing to. So, it could be a CFGNode
             or CFGEntryNode.
         """
-        self._reference_node = node
+        self._ref_node = node
 
-    def get_reference_node(self):
-        return self._reference_node
+    def get_ref_node(self):
+        return self._ref_node
 
     def get_loop_wcec(self):
         if self._loop_iters == 0: return 0
@@ -163,7 +163,7 @@ class CFGNode(object):
         buf.write(msg)
 
         if self._type == CFGNodeType.PSEUDO:
-            self.get_reference_node().show(buf, indent, lead + '|') # write loop
+            self.get_ref_node().show(buf, indent, lead + '|') # write loop
 
         for child in self._children:
             if child.get_type() == CFGNodeType.WHILE:
