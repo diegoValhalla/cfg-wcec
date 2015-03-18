@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
     # create CFG
     cfg = CFG(ast)
-    cfg.show()
+    #cfg.show()
 
     # create graphml
     cfg2graph = CFG2Graphml()
-    #cfg2graph.make_graphml(cfg, file_name='', yed_output=True)
+    cfg2graph.make_graphml(cfg, file_name='', yed_output=False)

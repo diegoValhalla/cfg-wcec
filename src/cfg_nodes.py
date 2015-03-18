@@ -1,5 +1,7 @@
 import sys
 
+from pycparser import c_ast
+
 
 class CFGNodeType():
     COMMON = "COMMON"
@@ -49,7 +51,7 @@ class CFGNode(object):
     """
     def __init__(self, type):
         self._type = type
-        self._start_line = -1
+        self._start_line = 0
         self._end_line = 0
         self._func_owner = None
         self._call_func_name = None
@@ -67,16 +69,16 @@ class CFGNode(object):
     def get_type(self):
         return self._type
 
-    def set_start_line(self, line):
-        self._start_line = line
-
     def get_start_line(self):
+        if self._start_line == 0 and self._ast_elem_list != []:
+            self._start_line = self._ast_elem_list[0].coord.line
+
         return self._start_line
 
-    def set_end_line(self, line):
-        self._end_line = line
-
     def get_end_line(self):
+        if self._end_line == 0 and self._ast_elem_list != []:
+            self._end_line = self._ast_elem_list[-1].coord.line
+
         return self._end_line
 
     def set_func_owner(self, name):
@@ -155,11 +157,13 @@ class CFGNode(object):
 
     def show(self, buf=sys.stdout, indent=1, lead=''):
         lead += ' ' * indent
-        msg = (lead + '- %s, %d\n') % (self._type.lower(), self._start_line)
+
+        msg = (lead + '- %s, %d\n') % (self.get_type().lower(),
+                self.get_start_line())
         buf.write(msg)
 
         if self._type == CFGNodeType.PSEUDO:
-            self._reference_node.show(buf, indent, lead + '|') # write loop
+            self.get_reference_node().show(buf, indent, lead + '|') # write loop
 
         for child in self._children:
             if child.get_type() == CFGNodeType.WHILE:

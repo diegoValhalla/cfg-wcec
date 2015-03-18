@@ -90,7 +90,8 @@ class CFGAstVisitor(object):
         if n.cond is None: return
 
         cond_node = CFGNode(CFGNodeType.IF)
-        cond_node.set_start_line(n.coord.line)
+        cond_node.set_func_owner(self._current_func_name)
+        cond_node.add_ast_elem(n.cond)
         self._add_new_node(cond_node)
         self._current_node = cond_node
         self._create_new_node = False
@@ -114,6 +115,7 @@ class CFGAstVisitor(object):
 
         # add end node
         end_node = CFGNode(CFGNodeType.END_IF)
+        end_node.set_func_owner(self._current_func_name)
         self._add_child_case_if(cond_node, iftrue_last_node,
                 iffalse_last_node, end_node)
 
@@ -122,8 +124,9 @@ class CFGAstVisitor(object):
 
     def visit_FuncCall(self, n):
         call_node = CFGNode(CFGNodeType.CALL)
-        call_node.set_start_line(n.coord.line)
+        call_node.set_func_owner(self._current_func_name)
         call_node.set_call_func_name(n.name)
+        call_node.add_ast_elem(n)
         self._add_new_node(call_node)
         self._current_node = call_node
         self._create_new_node = True
@@ -132,12 +135,13 @@ class CFGAstVisitor(object):
         if n.cond is None: return
 
         pseudo = CFGNode(CFGNodeType.PSEUDO)
-        pseudo.set_start_line(n.coord.line)
+        pseudo.set_func_owner(self._current_func_name)
+        pseudo.add_ast_elem(n.cond)
         self._add_new_node(pseudo)
 
         # while-cond
         cond = CFGNode(CFGNodeType.WHILE)
-        cond.set_start_line(n.coord.line)
+        cond.set_func_owner(self._current_func_name)
         self._current_node = cond
         self._create_new_node = False
         self.visit(n.cond) # a function call can be presented in condition
@@ -167,7 +171,7 @@ class CFGAstVisitor(object):
     def _add_ast_elem(self, ast_elem):
         if self._create_new_node:
             new_node = CFGNode(CFGNodeType.COMMON)
-            new_node.set_start_line(ast_elem.coord.line)
+            new_node.set_func_owner(self._current_func_name)
             self._add_new_node(new_node)
             self._current_node = new_node
             self._create_new_node = False
@@ -220,6 +224,7 @@ class CFGAstVisitor(object):
         else:
             for c in child.get_children():
                 self._make_loop_cycle(cond, c)
+
     def _clean_graph(self):
         for entry_node in self._entry_nodes:
             self._clean_node(entry_node.get_func_first_node())
