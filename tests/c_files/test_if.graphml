@@ -32,7 +32,7 @@
   <graph edgedefault="directed" id="graph" parse.edges="27" parse.nodes="20" parse.order="free">
     <node id="g1n0">
       <data key="k0">common</data>
-      <data key="k1">5</data>
+      <data key="k1">3</data>
       <data key="k2">6</data>
       <data key="k3">main</data>
       <data key="k4">none</data>

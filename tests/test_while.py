@@ -23,8 +23,8 @@ class TestWhile(unittest.TestCase):
         test_name = self.test_while.__name__
 
         c_test_file = self._find_file(test_name + '.c')
-        result_check = self._find_file(test_name + '.out.check')
-        result_ok = self._find_file(test_name + '.out.ok')
+        result_ok = self._find_file(test_name + '.cfg')
+        result_check = self._find_file(test_name + '.cfg.check')
 
         ast = parse_file(c_test_file, use_cpp=True)
         cfg = CFG(ast)
