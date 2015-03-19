@@ -14,6 +14,7 @@ class CFGNodeType():
     DO_WHILE = "DO_WHILE"
     PSEUDO = "PSEUDO"
     CALL = "CALL"
+    END = "END"
 
 
 class CFGEntryNode(object):

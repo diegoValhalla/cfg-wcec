@@ -62,6 +62,7 @@ class CFGAstVisitor(object):
             if isinstance(ext, c_ast.FuncDef):
                 self._init_vars()
                 self.visit(ext)
+                self._add_last_node()
 
     def visit_FuncDef(self, n):
         """ Get function name and explore its statements
@@ -220,24 +221,69 @@ class CFGAstVisitor(object):
                 self._make_loop_cycle(cond, c)
 
     def _clean_graph(self):
+        """ Search for unnecessary nodes and remove them.
+        """
         for entry_node in self._entry_nodes:
-            self._clean_node(entry_node.get_func_first_node())
+            self._clean_graph_visit(entry_node.get_func_first_node(), {})
 
-    def _clean_node(self, node):
-        while True:
-            rp_node = None
-            rp_id = -1
-            for n_id, n in enumerate(node.get_children()):
-                if n.get_type() == CFGNodeType.END_IF:
-                    rp_node = n
-                    rp_id = n_id
-                    break
+    def _clean_graph_visit(self, node, visited):
+        """ Remove only END_IF nodes from the graph
 
-            if rp_node == None: break
+            node:
+                CFGNode
 
-            # end node points to only one child,
-            # so replace it
+            visited:
+                Dictionary of which nodes have already been visited
+        """
+        visited[node] = True
+
+        rp_node = None
+        rp_id = -1
+        for n_id, n in enumerate(node.get_children()):
+            if n.get_type() == CFGNodeType.END_IF:
+                rp_node = n
+                rp_id = n_id
+                break
+
+        # end node points to only one child,
+        # so replace it
+        if rp_node is not None and rp_node.get_children() != []:
             node.get_children()[rp_id] = rp_node.get_children()[0]
 
+        if node.get_type() == CFGNodeType.PSEUDO:
+            self._clean_graph_visit(node.get_ref_node(), visited)
+
         for child in node.get_children():
-            self._clean_node(child)
+            if child not in visited:
+                self._clean_graph_visit(child, visited)
+
+    def _add_last_node(self):
+        """ Add last node to the function graph.
+        """
+        for entry in self._entry_nodes:
+            last_node = CFGNode(CFGNodeType.END)
+            last_node.set_func_owner(entry.get_func_name())
+            self._add_last_node_visit(entry.get_func_first_node(), last_node, {})
+
+    def _add_last_node_visit(self, n, last_node, visited):
+        """ Search for each node (except reference node) that does not have
+            children and add to it function last node. In this way, all
+            functions will always have one start and one end points.
+
+            n:
+                CFGNode
+
+            last_node:
+                CFGNode
+
+            visited:
+                Dictionary of which nodes have already been visited
+        """
+        visited[n] = True
+
+        for child in n.get_children():
+            if child not in visited:
+                self._add_last_node_visit(child, last_node, visited)
+
+        if n.get_type() != CFGNodeType.END and n.get_children() == []:
+            n.add_child(last_node)
