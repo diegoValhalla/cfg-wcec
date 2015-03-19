@@ -29,7 +29,7 @@
   <key attr.name="rwcec" attr.type="int" for="node" id="k8">
     <default>0</default>
   </key>
-  <graph edgedefault="directed" id="graph" parse.edges="11" parse.nodes="10" parse.order="free">
+  <graph edgedefault="directed" id="graph" parse.edges="12" parse.nodes="11" parse.order="free">
     <node id="g1n0">
       <data key="k0">common</data>
       <data key="k1">4</data>
@@ -211,11 +211,11 @@
       </data>
     </node>
     <node id="g1n9">
-      <data key="k0">call</data>
-      <data key="k1">19</data>
-      <data key="k2">19</data>
+      <data key="k0">end</data>
+      <data key="k1">0</data>
+      <data key="k2">0</data>
       <data key="k3">main</data>
-      <data key="k4">foo</data>
+      <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
@@ -230,7 +230,27 @@
         </y:ShapeNode>
       </data>
     </node>
-    <edge id="g1e0" source="g1n7" target="g1n8">
+    <node id="g1n10">
+      <data key="k0">call</data>
+      <data key="k1">19</data>
+      <data key="k2">19</data>
+      <data key="k3">main</data>
+      <data key="k4">foo</data>
+      <data key="k5">0</data>
+      <data key="k6">0</data>
+      <data key="k7">0</data>
+      <data key="k8">0</data>
+      <data key="nyed">
+        <y:ShapeNode>
+          <y:Shape type="ellipse"/>
+          <y:Geometry height="30.0" width="30.0"/>
+          <y:Fill color="#FFCC00"/>
+          <y:NodeLabel modelName="internal" modelPosition="c">10</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+        </y:ShapeNode>
+      </data>
+    </node>
+    <edge id="g1e0" source="g1n8" target="g1n9">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -239,7 +259,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e1" source="g1n6" target="g1n7">
+    <edge id="g1e1" source="g1n7" target="g1n8">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -248,7 +268,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e2" source="g1n5" target="g1n6">
+    <edge id="g1e2" source="g1n6" target="g1n7">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -257,7 +277,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e3" source="g1n9" target="g1n8">
+    <edge id="g1e3" source="g1n5" target="g1n6">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -266,7 +286,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e4" source="g1n5" target="g1n9">
+    <edge id="g1e4" source="g1n10" target="g1n8">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -275,7 +295,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e5" source="g1n4" target="g1n5">
+    <edge id="g1e5" source="g1n5" target="g1n10">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -284,7 +304,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e6" source="g1n3" target="g1n4">
+    <edge id="g1e6" source="g1n4" target="g1n5">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -293,7 +313,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e7" source="g1n2" target="g1n3">
+    <edge id="g1e7" source="g1n3" target="g1n4">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -302,7 +322,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e8" source="g1n2" target="g1n5">
+    <edge id="g1e8" source="g1n2" target="g1n3">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -311,7 +331,7 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e9" source="g1n1" target="g1n2">
+    <edge id="g1e9" source="g1n2" target="g1n5">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>
@@ -320,7 +340,16 @@
         </y:PolyLineEdge>
       </data>
     </edge>
-    <edge id="g1e10" source="g1n0" target="g1n1">
+    <edge id="g1e10" source="g1n1" target="g1n2">
+      <data key="k8">0</data>
+      <data key="eyed">
+        <y:PolyLineEdge>
+          <y:Arrows source="none" target="short"/>
+          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="g1e11" source="g1n0" target="g1n1">
       <data key="k8">0</data>
       <data key="eyed">
         <y:PolyLineEdge>

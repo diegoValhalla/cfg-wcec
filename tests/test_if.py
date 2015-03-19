@@ -27,7 +27,7 @@ class TestIf(unittest.TestCase):
         result_check = self._find_file(test_name + '.cfg.check')
 
         ast = parse_file(c_test_file, use_cpp=True)
-        cfg = CFG(ast)
+        cfg = CFG(c_test_file, ast)
 
         with open(result_check, 'w') as f:
             cfg.show(buf=f)
@@ -50,7 +50,7 @@ class TestIf(unittest.TestCase):
         result_check = self._find_file(test_name + '.graphml.check')
 
         ast = parse_file(c_test_file, use_cpp=True)
-        cfg = CFG(ast)
+        cfg = CFG(c_test_file, ast)
 
         cfg2graph = CFG2Graphml()
         cfg2graph.make_graphml(cfg, result_check, True)
