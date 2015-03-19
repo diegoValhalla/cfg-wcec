@@ -55,7 +55,7 @@ class CFGNode(object):
         self._end_line = 0
         self._func_owner = None
         self._call_func_name = None
-        self._ref_node = None
+        self._refnode = None
         self._loop_wcec = 0
         self._loop_iters = 0
         self._wcec = 0
@@ -67,15 +67,30 @@ class CFGNode(object):
         self._type = type
 
     def get_type(self):
+        """ return:
+                CFGNodeType
+        """
         return self._type
 
     def get_start_line(self):
+        """ Return node first line related to the first pycparser/c_ast element
+            added.
+
+            return:
+                int
+        """
         if self._start_line == 0 and self._ast_elem_list != []:
             self._start_line = self._ast_elem_list[0].coord.line
 
         return self._start_line
 
     def get_end_line(self):
+        """ Return node last line related to the last pycparser/c_ast element
+            added.
+
+            return:
+                int
+        """
         if self._end_line == 0 and self._ast_elem_list != []:
             self._end_line = self._ast_elem_list[-1].coord.line
 
@@ -85,6 +100,11 @@ class CFGNode(object):
         self._func_owner = name
 
     def get_func_owner(self):
+        """ Return function name that this node belongs to.
+
+            return:
+                string
+        """
         return self._func_owner
 
     def set_call_func_name(self, name):
@@ -94,65 +114,104 @@ class CFGNode(object):
         self._call_func_name = name
 
     def get_call_func_name(self):
+        """ Return function name that is being called.
+
+            return:
+                string
+        """
         return self._call_func_name
 
     def set_ref_node(self, node):
-        """ Reference node should be used by CALL or
-            PSEUDO nodes to know the function or loop
-            it is pointing to. So, it could be a CFGNode
-            or CFGEntryNode.
-        """
-        self._ref_node = node
+        self._refnode = node
 
     def get_ref_node(self):
-        return self._ref_node
+        """ Reference node should be used by CALL or PSEUDO nodes to know the
+            function or loop it is pointing to. So, it could be a CFGNode or
+            CFGEntryNode.
+
+            return:
+                CFGNode if this node is PSEUDO or CFGEntryNode if it is CALL
+        """
+        return self._refnode
 
     def get_loop_wcec(self):
-        if self._loop_iters == 0: return 0
+        """ Only PSEUDO nodes can have a value different of zero since
+            reference node is the while-condition itself.
+
+            return:
+                WCEC of the loop
+        """
+        if self._loop_iters() == 0:
+            return 0
+
         return self._wcec / self._loop_iters
 
     def set_loop_iters(self, iters):
         self._loop_iters = iters
 
     def get_loop_iters(self):
+        """ return:
+                The maximum number of loop iterations
+        """
         return self._loop_iters
 
-    def add_wcec(self, wcec):
-        """ It is the sum of each ast_elem WCEC that
-            belongs to this node. However, if node calls
-            a function, then its WCEC is equal to the
-            function one, or if it is a pseudo-loop, its
-            wcec is equal to loop WCEC times its iteration
-            number.
-        """
-        self._wcec += wcec
+    def set_wcec(self, wcec):
+        self._wcec = wcec
 
     def get_wcec(self):
+        """ WCEC is the sum of all cycles to executed the statements of this
+            node. However, if this node if of type CALL, then its WCEC is equal
+            to the function RWCEC, or if it is of type PSEUDO, its wcec is equal
+            to loop RWCEC times its iterations.
+
+            return:
+                int
+        """
         return self._wcec
 
     def set_rwcec(self, rwcec):
         self._rwcec = rwcec
 
     def get_rwcec(self):
+        """ RWCEC means the remaining cycles to be executed until the WCEC of
+            the worst case execution path of the CFG is completely consumed.
+
+            return:
+                int
+        """
         return self._rwcec
 
     def add_child(self, child):
         """ Add a new child that current node points to.
+
+            child:
+                CFGNode
         """
         self._children.append(child)
 
     def get_children(self):
         """ Return all children nodes.
+
+            return:
+                List of CFGNodes
         """
         return self._children
 
     def add_ast_elem(self, ast_elem):
-        """ A node is composed by one or more AST elements
-            get from pycparser AST.
+        """ A node is composed by one or more AST elements get from pycparser
+            AST.
+
+            ast_elem:
+                pycparser/c_ast element class
         """
         self._ast_elem_list.append(ast_elem)
 
     def get_ast_elem_list(self):
+        """ Return all AST elements that compose this node.
+
+            return:
+                List of pycparser/c_ast elements
+        """
         return self._ast_elem_list
 
     def show(self, buf=sys.stdout, indent=1, lead=''):
