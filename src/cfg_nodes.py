@@ -141,10 +141,12 @@ class CFGNode(object):
             return:
                 WCEC of the loop
         """
-        if self._loop_iters() == 0:
+        if (self._type != CFGNodeType.PSEUDO or
+                not isinstance(self._refnode, CFGNode) or
+                self._refnode.get_loop_iters() == 0):
             return 0
 
-        return self._wcec / self._loop_iters
+        return self.get_wcec() / self._refnode.get_loop_iters()
 
     def set_loop_iters(self, iters):
         self._loop_iters = iters
@@ -153,7 +155,10 @@ class CFGNode(object):
         """ return:
                 The maximum number of loop iterations
         """
-        return self._loop_iters
+        if not isinstance(self._refnode, CFGNode):
+            return 0
+
+        return self._refnode.get_loop_iters()
 
     def set_wcec(self, wcec):
         self._wcec = wcec
@@ -167,6 +172,13 @@ class CFGNode(object):
             return:
                 int
         """
+        if isinstance(self._refnode, CFGNode):
+            if self._type == CFGNodeType.PSEUDO:
+                return (self._refnode.get_rwcec() *
+                        self._refnode.get_loop_iters())
+            elif self._type == CFGNodeType.CALL:
+                return self._refnode.get_rwcec()
+
         return self._wcec
 
     def set_rwcec(self, rwcec):
