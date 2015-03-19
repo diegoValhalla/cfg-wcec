@@ -1,4 +1,12 @@
-void foo();
+void foo() {
+    int a, b;
+
+    a = b = 3;
+    if (a < b) {
+        a++;
+        b--;
+    }
+}
 
 int main() {
     int a, b, c;

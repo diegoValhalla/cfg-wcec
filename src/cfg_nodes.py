@@ -167,8 +167,8 @@ class CFGNode(object):
     def get_wcec(self):
         """ WCEC is the sum of all cycles to executed the statements of this
             node. However, if this node if of type CALL, then its WCEC is equal
-            to the function RWCEC, or if it is of type PSEUDO, its wcec is equal
-            to loop RWCEC times its iterations.
+            to cycles to call plus the function RWCEC, or if it is of type
+            PSEUDO, its wcec is equal to loop RWCEC times its iterations.
 
             return:
                 int
@@ -178,7 +178,7 @@ class CFGNode(object):
                 return (self._refnode.get_rwcec() *
                         self._refnode.get_loop_iters())
             elif self._type == CFGNodeType.CALL:
-                return self._refnode.get_rwcec()
+                return self._wcec + self._refnode.get_rwcec()
 
         return self._wcec
 

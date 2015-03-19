@@ -42,6 +42,7 @@ class CFGAstVisitor(object):
     def make_cfg_from_ast(self, ast):
         if isinstance(ast, c_ast.FileAST):
             self.visit(ast)
+            self._update_call()
             self._clean_graph()
 
         return self._get_entry_nodes()
@@ -219,6 +220,34 @@ class CFGAstVisitor(object):
         else:
             for c in child.get_children():
                 self._make_loop_cycle(cond, c)
+
+    def _update_call(self):
+        """ Explore all functions graphs to find CALL nodes and set its
+            reference node to the function that is being called.
+        """
+        for entry in self._entry_nodes:
+            self._update_call_visit(entry.get_func_first_node(), {})
+
+    def _update_call_visit(self, n, visited):
+        """ Explore graph to find CALL nodes to set its reference node.
+
+            n:
+                CFGNode
+
+            visited:
+                Dictionary which keeps all nodes that were already visited
+        """
+        visited[n] = True
+
+        if n.get_type() == CFGNodeType.CALL:
+            for entry in self._entry_nodes:
+                if n.get_call_func_name() == entry.get_func_name():
+                    n.set_ref_node(entry)
+                    break
+
+        for child in n.get_children():
+            if child not in visited:
+                self._update_call_visit(child, visited)
 
     def _clean_graph(self):
         """ Search for unnecessary nodes and remove them.
