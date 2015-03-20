@@ -157,7 +157,7 @@ class CFGNode(object):
                 The maximum number of loop iterations
         """
         if not isinstance(self._refnode, CFGNode):
-            return 0
+            return self._loop_iters
 
         return self._refnode.get_loop_iters()
 
@@ -173,12 +173,15 @@ class CFGNode(object):
             return:
                 int
         """
-        if isinstance(self._refnode, CFGNode):
-            if self._type == CFGNodeType.PSEUDO:
-                return (self._refnode.get_rwcec() *
-                        self._refnode.get_loop_iters())
-            elif self._type == CFGNodeType.CALL:
-                return self._wcec + self._refnode.get_rwcec()
+        if (self._type == CFGNodeType.PSEUDO and
+                isinstance(self._refnode, CFGNode)):
+            return (self._refnode.get_rwcec() *
+                    self._refnode.get_loop_iters())
+        elif (self._type == CFGNodeType.CALL and
+                isinstance(self._refnode, CFGEntryNode) and
+                isinstance(self._refnode.get_func_first_node(), CFGNode)):
+            return (self._wcec +
+                self._refnode.get_func_first_node().get_rwcec())
 
         return self._wcec
 

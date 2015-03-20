@@ -20,70 +20,8 @@ class CFGWCEC(object):
         # make C line-asmInstruction table
         cline_instr_table = self._asm_instr_from_clines(cfile)
 
-        # set nodes WCEC
-        for entry in cfg.get_entry_nodes():
-            self._node_wcec(entry.get_func_first_node(), {},
-                    instr_cycle_table, cline_instr_table)
-
-    def _node_wcec(self, n, visited, instr_cycle_table, cline_instr_table):
-        """ Explore all function graph to set WCEC of each node. All
-            instructions in the range of [start line, end line] of a node,
-            their cost in cycles to be executed should be add as a part of node
-            WCEC.
-
-            Note I: The first node of each function is the only one that
-            includes instructions of lines less than start line, i.e. node
-            start line is 4, but the first instruction is reported in 2. This
-            is done since assembler code allocates some important information
-            at begining of a function.
-
-            Note II: All END nodes are the ones which take the latest
-            instructions line. In assembler code, every time a function is end,
-            some memory are desallocated, so assembler code information is
-            added to the last node.
-
-            n:
-                CFGNode to be visited
-
-            visited:
-                Dictionary which keeps all nodes that were already visited
-
-            instr_cycle_table:
-                Dictionary keeping the cost in cycles to execute each assembly
-                instruction, i.e. {instr1: cost_cycle1, instr2: cost_cycle2, ...}
-
-            cline_instr_table:
-                Dictionary keeping the list of assembly instructions that map
-                to each C line, i.e. {cline1: [asm_instr1, asm_instr2, ...], ...}
-        """
-        if not isinstance(n, CFGNode): return
-
-        visited[n] = True
-        if n.get_type() == CFGNodeType.PSEUDO:
-            self._node_wcec(n.get_ref_node(), visited, instr_cycle_table,
-                    cline_instr_table)
-        else:
-            clines = sorted(cline_instr_table.keys())
-            wcec = 0
-            for cline in clines:
-                if (cline > n.get_end_line() and
-                        n.get_type() != CFGNodeType.END):
-                    break
-
-                for instr in cline_instr_table[cline]:
-                    wcec += instr_cycle_table[instr]
-                del cline_instr_table[cline]
-
-                # END node should include only the function last line in
-                # assembly code
-                if n.get_type() == CFGNodeType.END:
-                    break
-            n.set_wcec(wcec)
-
-        for child in n.get_children():
-            if child not in visited:
-                self._node_wcec(child, visited, instr_cycle_table,
-                        cline_instr_table)
+        self._compute_wcec(cfg, instr_cycle_table, cline_instr_table)
+        self._compute_cfg_rwcec(cfg)
 
 
     def _get_file_path(self, name):
@@ -207,3 +145,135 @@ class CFGWCEC(object):
                 cline_table[curline].append(data)
 
         return cline_table
+
+    def _compute_wcec(self, cfg, instr_cycle_table, cline_instr_table):
+        """ Visit all nodes of each function and set their WCEC.
+
+            cfg:
+                CFG
+
+            instr_cycle_table:
+                Dictionary keeping the cost in cycles to execute each assembly
+                instruction, i.e. {instr1: cost_cycle1, instr2: cost_cycle2, ...}
+
+            cline_instr_table:
+                Dictionary keeping the list of assembly instructions that map
+                to each C line, i.e. {cline1: [asm_instr1, asm_instr2, ...], ...}
+        """
+        for entry in cfg.get_entry_nodes():
+            self._compute_wcec_visited(entry.get_func_first_node(), {},
+                    instr_cycle_table, cline_instr_table)
+
+    def _compute_wcec_visited(self, n, visited, instr_cycle_table,
+            cline_instr_table):
+        """ Explore all function graph to set WCEC of each node. All
+            instructions in the range of [start line, end line] of a node,
+            their cost in cycles to be executed should be add as a part of node
+            WCEC.
+
+            Note I: The first node of each function is the only one that
+            includes instructions of lines less than start line, i.e. node
+            start line is 4, but the first instruction is reported in 2. This
+            is done since assembler code allocates some important information
+            at begining of a function.
+
+            Note II: All END nodes are the ones which take the latest
+            instructions line. In assembler code, every time a function is end,
+            some memory are desallocated, so assembler code information is
+            added to the last node.
+
+            n:
+                CFGNode to be visited
+
+            visited:
+                Dictionary which keeps all nodes that were already visited
+
+            instr_cycle_table:
+                Dictionary keeping the cost in cycles to execute each assembly
+                instruction, i.e. {instr1: cost_cycle1, instr2: cost_cycle2, ...}
+
+            cline_instr_table:
+                Dictionary keeping the list of assembly instructions that map
+                to each C line, i.e. {cline1: [asm_instr1, asm_instr2, ...], ...}
+        """
+        if not isinstance(n, CFGNode): return
+
+        visited[n] = True
+
+        # visit loop
+        if n.get_type() == CFGNodeType.PSEUDO:
+            self._compute_wcec_visited(n.get_ref_node(), visited,
+                    instr_cycle_table, cline_instr_table)
+        else:
+            clines = sorted(cline_instr_table.keys())
+            wcec = 0
+            for cline in clines:
+                if (cline > n.get_end_line() and
+                        n.get_type() != CFGNodeType.END):
+                    break
+
+                for instr in cline_instr_table[cline]:
+                    wcec += instr_cycle_table[instr]
+                del cline_instr_table[cline]
+
+                # END node should include only the function last line in
+                # assembly code
+                if n.get_type() == CFGNodeType.END:
+                    break
+            n.set_wcec(wcec)
+
+        for child in n.get_children():
+            if child not in visited:
+                self._compute_wcec_visited(child, visited, instr_cycle_table,
+                        cline_instr_table)
+
+    def _compute_cfg_rwcec(self, cfg=None):
+        """ Visit all nodes and set their RWCEC by always checking if the
+            current entry node was not already visited, because of a CALL node.
+
+            cfg:
+                CFG
+        """
+        if cfg is None: return
+
+        for entry in cfg.get_entry_nodes():
+            first_node = entry.get_func_first_node()
+            if isinstance(first_node, CFGNode) and first_node.get_rwcec() == 0:
+                self._compute_cfg_rwcec_visit(entry.get_func_first_node(), {})
+
+    def _compute_cfg_rwcec_visit(self, n, visited):
+        """ Visit node children to get the greatest RWCEC and pass it to the
+            parent tree. First, check if node is a loop and get loop RWCEC.
+            Then, check if current node is a CALL, so visit the entry node.
+            After that, check if there is a child whose RWCEC plus current node
+            WCEC is greater than the current one, and change it if it is true.
+
+            n:
+                CFGNode
+
+            visited:
+                Dictionary which keeps all nodes that were already visited
+        """
+        visited[n] = True
+
+        # visit loop
+        if (n.get_type() == CFGNodeType.PSEUDO and
+                isinstance(n.get_ref_node(), CFGNode)):
+            self._compute_cfg_rwcec_visit(n.get_ref_node(), visited)
+
+        # visit entry node that is called by current node
+        elif (n.get_type() == CFGNodeType.CALL and
+                isinstance(n.get_ref_node(), CFGEntryNode) and
+                isinstance(n.get_ref_node().get_func_first_node(), CFGNode)):
+            self._compute_cfg_rwcec_visit(
+                    n.get_ref_node().get_func_first_node(), visited)
+
+        for child in n.get_children():
+            if child not in visited:
+                self._compute_cfg_rwcec_visit(child, visited)
+            if n.get_wcec() + child.get_rwcec() > n.get_rwcec():
+                n.set_rwcec(n.get_wcec() + child.get_rwcec())
+
+        # only a END node can have no children
+        if n.get_children() == []:
+            n.set_rwcec(n.get_wcec())

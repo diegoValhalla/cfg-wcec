@@ -225,7 +225,7 @@ class CFG2Graphml(object):
                 xml_data.set('key', key['id'])
                 try:
                     method_name = key['get_data']
-                    method = getattr(n, method_name)
+                    method = getattr(child, method_name)
                     xml_data.text = str(method()).lower()
                 except AttributeError:
                     xml_data.text = key['default']
