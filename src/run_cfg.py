@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #ast.show(showcoord=True)
 
     # create CFG
-    cfg = CFG(ast)
+    cfg = CFG(name, ast)
     #cfg.show()
 
     # create graphml
