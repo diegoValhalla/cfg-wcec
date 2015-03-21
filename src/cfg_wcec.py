@@ -307,8 +307,16 @@ class CFGWCEC(object):
         for child in n.get_children():
             if child not in visited:
                 self._compute_cfg_rwcec_visit(child, visited)
-            if n.get_wcec() + child.get_rwcec() > n.get_rwcec():
+
+            if n.get_type() == CFGNodeType.PSEUDO:
+                if n.get_loop_wcec() + child.get_rwcec() > n.get_rwcec():
+                    n.set_rwcec(n.get_loop_wcec() + child.get_rwcec())
+            elif n.get_wcec() + child.get_rwcec() > n.get_rwcec():
                 n.set_rwcec(n.get_wcec() + child.get_rwcec())
+
+        # while condition must execute twice until it breaks the loop
+        if n.get_type() == CFGNodeType.WHILE:
+            n.set_rwcec(n.get_rwcec() + n.get_wcec())
 
         # only a END node can have no children
         if n.get_children() == []:

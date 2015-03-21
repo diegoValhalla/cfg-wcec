@@ -147,7 +147,7 @@ class CFGNode(object):
                 self._refnode.get_loop_iters() == 0):
             return 0
 
-        return self.get_wcec() / self._refnode.get_loop_iters()
+        return self._refnode.get_rwcec() * self._refnode.get_loop_iters()
 
     def set_loop_iters(self, iters):
         self._loop_iters = iters
@@ -175,8 +175,7 @@ class CFGNode(object):
         """
         if (self._type == CFGNodeType.PSEUDO and
                 isinstance(self._refnode, CFGNode)):
-            return (self._refnode.get_rwcec() *
-                    self._refnode.get_loop_iters())
+            return self._refnode.get_wcec()
         elif (self._type == CFGNodeType.CALL and
                 isinstance(self._refnode, CFGEntryNode) and
                 isinstance(self._refnode.get_func_first_node(), CFGNode)):
