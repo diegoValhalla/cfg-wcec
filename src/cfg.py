@@ -36,8 +36,8 @@ class CFG(object):
         self._entry_nodes = ast_visitor.make_cfg_from_ast(ast)
 
     def _compute_wcec(self):
-        cfg_wcec = CFGWCEC()
-        cfg_wcec.compute_cfg_wcec(self._filename, self)
+        cfg_wcec = CFGWCEC(self._filename, self)
+        cfg_wcec.compute_cfg_wcec()
 
     def show(self, buf=sys.stdout):
         for entry_point in self.get_entry_nodes():

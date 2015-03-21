@@ -8,28 +8,43 @@ from cfg_nodes import CFGNodeType, CFGEntryNode, CFGNode
 
 
 class CFGWCEC(object):
+    """ Compute WCEC and RWCEC for each node of the given CFG. It also takes
+        the C file and retrieve information of how much iterations each loop
+        should does by matching the string '// @LOOP <number>'.
 
-    def compute_cfg_wcec(self, cfile=None, cfg=None):
+        Args:
+            cfile (string): C file name
+            cfg (CFG): control flow graph made from AST
+
+        Attributes:
+            _cfile (string): C file name
+            _cfg (CFG): control flow graph made from AST
+    """
+    def __init__(self, cfile=None, cfg=None):
+        self._cfile = cfile
+        self._cfg = cfg
+
+    def compute_cfg_wcec(self):
         """ Compute CFG WCEC for all nodes.
         """
-        if cfg is None: return
+        if self._cfg is None: return
 
         # make asm instruction-cycle table
         instr_cycle_table = self._make_instr_cycle_table()
 
         # make C line-asmInstruction table
-        cline_instr_table = self._asm_instr_from_clines(cfile)
+        cline_instr_table = self._asm_instr_from_clines(self._cfile)
 
-        self._compute_wcec(cfg, instr_cycle_table, cline_instr_table)
-        self._compute_cfg_rwcec(cfg)
+        self._compute_wcec(self._cfg, instr_cycle_table, cline_instr_table)
+        self._compute_cfg_rwcec(self._cfg)
 
 
     def _get_file_path(self, name):
         """ Find a c file by name, taking into account the current dir can be
             in a couple of typical places
 
-            name:
-                C file name to add the whole path.
+            Args:
+                name (string): C file name to add the whole path.
         """
         curdir = os.path.dirname(__file__)
         name = os.path.join(curdir, name)
@@ -39,13 +54,13 @@ class CFGWCEC(object):
         """ Make a dictionary based on _asm_cycle.txt where each asm
             instruction has its own cost cycle.
 
-            asm_cycle_file:
-                CPU datasheet table where each line tells assembly instruction
-                and the cost cycle to execute it. Default value is a table from
-                armv4t architecture.
+            Args:
+                asm_cycle_file (string): CPU datasheet table where each line
+                    tells assembly instruction and the cost cycle to execute
+                    it. Default value is a table from armv4t architecture.
 
-            return:
-                Dictionary: {instr1: cost_cycle1, instr2: cost_cycle2, ...}
+            Returns:
+                Dic: {instr1: cost_cycle1, instr2: cost_cycle2, ...}
         """
         asm_cycle_table = {}
         file_path = self._get_file_path(asm_cycle_file)
@@ -63,10 +78,10 @@ class CFGWCEC(object):
         """ Runs gcc of armv4t architecture to get assembler code with debug
             information in standard output.
 
-            cfile:
-                C file name.
+            Args:
+                cfile (string): C file name.
 
-            return:
+            Returns:
                 List where each element is a line from assembler code.
         """
         cpp_path = '../tools/toolschain/4.4.3/bin/arm-none-linux-gnueabi-gcc'
@@ -97,11 +112,11 @@ class CFGWCEC(object):
             instructions are related. The latter is simply the map assembler
             instructions from C code.
 
-            cfile:
-                C file name.
+            Args:
+                cfile (string): C file name.
 
-            return:
-                Dictionary: {cline1: [asm_instr1, asm_instr2, ...], ...}
+            Returns:
+                Dic: {cline1: [asm_instr1, asm_instr2, ...], ...}
         """
         # generate .s file
         asm_lines = self._gen_asm_file(cfile)
@@ -149,16 +164,16 @@ class CFGWCEC(object):
     def _compute_wcec(self, cfg, instr_cycle_table, cline_instr_table):
         """ Visit all nodes of each function and set their WCEC.
 
-            cfg:
-                CFG
+            Args:
+                cfg (CFG): control flow graph
 
-            instr_cycle_table:
-                Dictionary keeping the cost in cycles to execute each assembly
-                instruction, i.e. {instr1: cost_cycle1, instr2: cost_cycle2, ...}
+                instr_cycle_table (dic): Dictionary keeping the cost in cycles
+                    to execute each assembly instruction, i.e.
+                    {instr1: cost_cycle1, instr2: cost_cycle2, ...}
 
-            cline_instr_table:
-                Dictionary keeping the list of assembly instructions that map
-                to each C line, i.e. {cline1: [asm_instr1, asm_instr2, ...], ...}
+                cline_instr_table (dic): Dictionary keeping the list of assembly
+                    instructions that map to each C line, i.e.
+                    {cline1: [asm_instr1, asm_instr2, ...], ...}
         """
         for entry in cfg.get_entry_nodes():
             self._compute_wcec_visited(entry.get_func_first_node(), {},
@@ -182,23 +197,27 @@ class CFGWCEC(object):
             some memory are desallocated, so assembler code information is
             added to the last node.
 
-            n:
-                CFGNode to be visited
+            Args:
+                n (CFGNode): CFGNode to be visited
 
-            visited:
-                Dictionary which keeps all nodes that were already visited
+                visited (dictionary): Dictionary which keeps all nodes that
+                    were already visited
 
-            instr_cycle_table:
-                Dictionary keeping the cost in cycles to execute each assembly
-                instruction, i.e. {instr1: cost_cycle1, instr2: cost_cycle2, ...}
+                instr_cycle_table (dic): Dictionary keeping the cost in cycles
+                    to execute each assembly instruction, i.e.
+                    {instr1: cost_cycle1, instr2: cost_cycle2, ...}
 
-            cline_instr_table:
-                Dictionary keeping the list of assembly instructions that map
-                to each C line, i.e. {cline1: [asm_instr1, asm_instr2, ...], ...}
+                cline_instr_table (dic): Dictionary keeping the list of assembly
+                    instructions that map to each C line, i.e.
+                    {cline1: [asm_instr1, asm_instr2, ...], ...}
         """
         if not isinstance(n, CFGNode): return
 
         visited[n] = True
+
+        # update loop iterations of each loop condition node
+        if n.get_type() == CFGNodeType.WHILE:
+            n.set_loop_iters(self._get_loop_iters(n.get_start_line()))
 
         # visit loop
         if n.get_type() == CFGNodeType.PSEUDO:
@@ -227,12 +246,37 @@ class CFGWCEC(object):
                 self._compute_wcec_visited(child, visited, instr_cycle_table,
                         cline_instr_table)
 
+    def _get_loop_iters(self, loop_cond_line):
+        """ Get loop condition line from the C file and search for the tag:
+            '// @LOOP <number>'. This tag contains information about the maximum
+            number of loop iterations.
+
+            Args:
+                loop_cond_line (int): loop condition line in C file
+
+            Returns:
+                If there is a match to '// @LOOP <number>', return <number>,
+                else return 0
+        """
+        clines = []
+        file_path = self._get_file_path(self._cfile)
+        with open(file_path, 'rU') as f:
+            clines = f.readlines()
+
+        if clines != [] and loop_cond_line - 1 <= len(clines):
+            pattern = '[^//]*\s*[@LOOP]\s*(\d+)'
+            res = re.search(pattern, clines[loop_cond_line - 1])
+            if res:
+                return int(res.group(1))
+
+        return 0
+
     def _compute_cfg_rwcec(self, cfg=None):
         """ Visit all nodes and set their RWCEC by always checking if the
             current entry node was not already visited, because of a CALL node.
 
-            cfg:
-                CFG
+            Args:
+                cfg (CFG): control flow graph
         """
         if cfg is None: return
 
@@ -248,11 +292,11 @@ class CFGWCEC(object):
             After that, check if there is a child whose RWCEC plus current node
             WCEC is greater than the current one, and change it if it is true.
 
-            n:
-                CFGNode
+            Args:
+                n (CFGNode): node to be visit
 
-            visited:
-                Dictionary which keeps all nodes that were already visited
+                visited (dic): dictionary which keeps all nodes that were
+                    already visited
         """
         visited[n] = True
 

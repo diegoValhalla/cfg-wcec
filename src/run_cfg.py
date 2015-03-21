@@ -1,6 +1,6 @@
 import os
 
-from pycparser import c_parser, c_ast
+from pycparser import c_parser, c_ast, parse_file
 
 from cfg import CFG
 from cfg2graphml import CFG2Graphml
@@ -17,7 +17,9 @@ if __name__ == '__main__':
 
     # run pycparser
     parser = c_parser.CParser()
-    ast = parser.parse(text, filename=name)
+    ast = parse_file(name, use_cpp=True,
+            cpp_path='gcc',
+            cpp_args=['-E'])
     #ast.show(showcoord=True)
 
     # create CFG
