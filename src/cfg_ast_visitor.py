@@ -266,18 +266,23 @@ class CFGAstVisitor(object):
         """
         visited[node] = True
 
-        rp_node = None
-        rp_id = -1
-        for n_id, n in enumerate(node.get_children()):
-            if n.get_type() == CFGNodeType.END_IF:
-                rp_node = n
-                rp_id = n_id
-                break
+        while True:
+            rp_node = None
+            rp_id = -1
+            for n_id, n in enumerate(node.get_children()):
+                if n.get_type() == CFGNodeType.END_IF:
+                    rp_node = n
+                    rp_id = n_id
+                    break
 
-        # end node points to only one child,
-        # so replace it
-        if rp_node is not None and rp_node.get_children() != []:
-            node.get_children()[rp_id] = rp_node.get_children()[0]
+            # end node points to only one child,
+            # so replace it
+            if rp_node is not None and rp_node.get_children() != []:
+                node.get_children()[rp_id] = rp_node.get_children()[0]
+
+            # END-IF can be replaced by another, so continue until there's none
+            if rp_node == None:
+                break
 
         if node.get_type() == CFGNodeType.PSEUDO:
             self._clean_graph_visit(node.get_ref_node(), visited)
