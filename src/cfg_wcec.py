@@ -38,19 +38,7 @@ class CFGWCEC(object):
         self._compute_wcec(self._cfg, instr_cycle_table, cline_instr_table)
         self._compute_cfg_rwcec(self._cfg)
 
-
-    def _get_file_path(self, name):
-        """ Find a c file by name, taking into account the current dir can be
-            in a couple of typical places
-
-            Args:
-                name (string): C file name to add the whole path.
-        """
-        curdir = os.path.dirname(__file__)
-        name = os.path.join(curdir, name)
-        return name
-
-    def _make_instr_cycle_table(self, asm_cycle_file='_asm_cycle.txt'):
+    def _make_instr_cycle_table(self, asm_cycle_file=None):
         """ Make a dictionary based on _asm_cycle.txt where each asm
             instruction has its own cost cycle.
 
@@ -58,12 +46,17 @@ class CFGWCEC(object):
                 asm_cycle_file (string): CPU datasheet table where each line
                     tells assembly instruction and the cost cycle to execute
                     it. Default value is a table from armv4t architecture.
+                    (default '_asm_cycle.txt')
 
             Returns:
                 Dic: {instr1: cost_cycle1, instr2: cost_cycle2, ...}
         """
+        file_path = ''
+        if asm_cycle_file is None:
+            curdir = os.path.dirname(__file__)
+            file_path = os.path.join(curdir, '_asm_cycle.txt')
+
         asm_cycle_table = {}
-        file_path = self._get_file_path(asm_cycle_file)
         with open(file_path, 'rU') as f:
             lines = f.readlines()
             for line in lines:
@@ -259,8 +252,7 @@ class CFGWCEC(object):
                 else return 0
         """
         clines = []
-        file_path = self._get_file_path(self._cfile)
-        with open(file_path, 'rU') as f:
+        with open(self._cfile, 'rU') as f:
             clines = f.readlines()
 
         if clines != [] and loop_cond_line - 1 <= len(clines):

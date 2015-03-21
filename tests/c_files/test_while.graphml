@@ -38,15 +38,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">29</data>
+      <data key="k8">69</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">0</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.29</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -59,7 +59,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">40</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -78,15 +78,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">2</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -98,15 +98,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">3</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -119,7 +119,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">40</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -138,15 +138,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">5</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -159,7 +159,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -178,15 +178,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">16</data>
+      <data key="k8">54</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">7</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.16</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -198,15 +198,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">8</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -218,15 +218,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">9</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -238,15 +238,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">8</data>
+      <data key="k8">40</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">10</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.8</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -259,7 +259,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">32</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -278,15 +278,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">12</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -298,15 +298,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">14</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">13</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.14</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -319,7 +319,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">24</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -338,15 +338,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">15</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -358,15 +358,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">16</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -378,15 +378,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">24</data>
+      <data key="k8">24</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">17</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.24</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -398,15 +398,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">16</data>
+      <data key="k8">32</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">18</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.16</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -419,7 +419,7 @@
       <data key="k5">0</data>
       <data key="k6">0</data>
       <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k8">16</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
@@ -438,15 +438,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">20</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -458,15 +458,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">21</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -498,15 +498,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">19</data>
+      <data key="k8">57</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">23</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.19</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -518,15 +518,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">38</data>
+      <data key="k8">38</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">24</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.38</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -538,15 +538,15 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">3</data>
+      <data key="k8">16</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">25</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.3</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
@@ -558,213 +558,213 @@
       <data key="k4">none</data>
       <data key="k5">0</data>
       <data key="k6">0</data>
-      <data key="k7">0</data>
-      <data key="k8">0</data>
+      <data key="k7">13</data>
+      <data key="k8">13</data>
       <data key="nyed">
         <y:ShapeNode>
           <y:Shape type="ellipse"/>
           <y:Geometry height="30.0" width="30.0"/>
           <y:Fill color="#FFCC00"/>
           <y:NodeLabel modelName="internal" modelPosition="c">26</y:NodeLabel>
-          <y:NodeLabel modelName="sides" modelPosition="e">W.0</y:NodeLabel>
+          <y:NodeLabel modelName="sides" modelPosition="e">W.13</y:NodeLabel>
         </y:ShapeNode>
       </data>
     </node>
     <edge id="g1e0" source="g1n3" target="g1n2">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e1" source="g1n2" target="g1n3">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e2" source="g1n1" target="g1n2">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e3" source="g1n8" target="g1n7">
-      <data key="k8">0</data>
+      <data key="k8">54</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">54</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e4" source="g1n7" target="g1n8">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e5" source="g1n6" target="g1n7">
-      <data key="k8">0</data>
+      <data key="k8">54</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">54</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e6" source="g1n9" target="g1n5">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e7" source="g1n6" target="g1n9">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e8" source="g1n5" target="g1n6">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e9" source="g1n4" target="g1n5">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e10" source="g1n16" target="g1n15">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e11" source="g1n15" target="g1n16">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e12" source="g1n14" target="g1n15">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e13" source="g1n17" target="g1n12">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e14" source="g1n14" target="g1n17">
-      <data key="k8">0</data>
+      <data key="k8">24</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">24</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e15" source="g1n13" target="g1n14">
-      <data key="k8">0</data>
+      <data key="k8">24</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">24</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e16" source="g1n12" target="g1n13">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e17" source="g1n11" target="g1n12">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e18" source="g1n24" target="g1n23">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e19" source="g1n23" target="g1n24">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e20" source="g1n22" target="g1n23">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e21" source="g1n22" target="g1n20">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
@@ -778,92 +778,92 @@
       </data>
     </edge>
     <edge id="g1e23" source="g1n20" target="g1n21">
-      <data key="k8">0</data>
+      <data key="k8">38</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">38</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e24" source="g1n19" target="g1n20">
-      <data key="k8">0</data>
+      <data key="k8">57</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">57</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e25" source="g1n25" target="g1n26">
-      <data key="k8">0</data>
+      <data key="k8">13</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">13</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e26" source="g1n19" target="g1n25">
-      <data key="k8">0</data>
+      <data key="k8">16</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">16</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e27" source="g1n18" target="g1n19">
-      <data key="k8">0</data>
+      <data key="k8">16</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">16</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e28" source="g1n11" target="g1n18">
-      <data key="k8">0</data>
+      <data key="k8">32</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">32</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e29" source="g1n10" target="g1n11">
-      <data key="k8">0</data>
+      <data key="k8">32</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">32</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e30" source="g1n4" target="g1n10">
-      <data key="k8">0</data>
+      <data key="k8">40</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">40</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e31" source="g1n1" target="g1n4">
-      <data key="k8">0</data>
+      <data key="k8">40</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">40</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
     <edge id="g1e32" source="g1n0" target="g1n1">
-      <data key="k8">0</data>
+      <data key="k8">40</data>
       <data key="eyed">
         <y:PolyLineEdge>
           <y:Arrows source="none" target="short"/>
-          <y:EdgeLabel alignment="center">0</y:EdgeLabel>
+          <y:EdgeLabel alignment="center">40</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
