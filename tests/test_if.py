@@ -3,10 +3,9 @@ import unittest
 
 sys.path.insert(0, '..')
 
-from pycparser import parse_file, c_ast
-
 from src.cfg import CFG
 from src.cfg2graphml import CFG2Graphml
+
 
 # Test if statements
 #
@@ -26,9 +25,8 @@ class TestIf(unittest.TestCase):
         result_ok = self._find_file(test_name + '.cfg')
         result_check = self._find_file(test_name + '.cfg.check')
 
-        ast = parse_file(c_test_file, use_cpp=True)
-        cfg = CFG(c_test_file, ast)
-
+        cfg = CFG(c_test_file)
+        cfg.make_cfg()
         with open(result_check, 'w') as f:
             cfg.show(buf=f)
 
@@ -49,9 +47,8 @@ class TestIf(unittest.TestCase):
         result_ok = self._find_file(test_name + '.graphml')
         result_check = self._find_file(test_name + '.graphml.check')
 
-        ast = parse_file(c_test_file, use_cpp=True)
-        cfg = CFG(c_test_file, ast)
-
+        cfg = CFG(c_test_file,)
+        cfg.make_cfg()
         cfg2graph = CFG2Graphml()
         cfg2graph.make_graphml(cfg, result_check, True)
 

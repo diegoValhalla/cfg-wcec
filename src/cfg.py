@@ -1,5 +1,7 @@
 import sys
 
+from pycparser import parse_file
+
 from cfg_ast_visitor import CFGAstVisitor
 from cfg_wcec import CFGWCEC
 
@@ -22,18 +24,26 @@ class CFG(object):
         because generic_visit() should have some changes.
     """
 
-    def __init__(self, filename, ast):
+    def __init__(self, filename):
         self._filename = filename
+        self._ast = None
         self._entry_nodes = []
-        self._make_cfg(ast)
-        self._compute_wcec()
 
     def get_entry_nodes(self):
         return self._entry_nodes
 
-    def _make_cfg(self, ast):
+    def get_ast(self):
+        return self._ast
+
+    def make_cfg(self):
+        # run pycparser
+        self._ast = parse_file(self._filename, use_cpp=True,
+                                cpp_path='gcc',
+                                cpp_args=['-E'])
+        # explore AST and make CFG
         ast_visitor = CFGAstVisitor()
-        self._entry_nodes = ast_visitor.make_cfg_from_ast(ast)
+        self._entry_nodes = ast_visitor.make_cfg_from_ast(self._ast)
+        self._compute_wcec()
 
     def _compute_wcec(self):
         cfg_wcec = CFGWCEC(self._filename, self)
