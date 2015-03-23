@@ -9,5 +9,5 @@ if __name__ == '__main__':
     #cfg.show()
 
     # create graphml
-    cfg2graph = cfg2graphml.CFG2Graphml()
-    cfg2graph.make_graphml(cfg, file_name='', yed_output=True)
+    cfg2graphml = cfg2graphml.CFG2Graphml()
+    cfg2graphml.make_graphml(cfg, file_name='', yed_output=True)
