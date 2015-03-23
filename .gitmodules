@@ -1,3 +1,3 @@
-[submodule "src/pycparser"]
-	path = src/pycparser
+[submodule "cfg/pycparser"]
+	path = cfg/pycparser
 	url = git@github.com:eliben/pycparser.git
