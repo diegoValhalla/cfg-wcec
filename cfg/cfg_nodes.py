@@ -18,22 +18,38 @@ class CFGNodeType():
 
 
 class CFGEntryNode(object):
-    """ Class to store initial data from function
-        definition. The first node is always the
-        first one made of the compound statement
-        from pycparser AST.
+    """ Class to store initial data from function definition. The first node
+        is always the first one made of the compound statement from pycparser
+        AST.
+
+        Attributes:
+            func_name (string): function name
+            func_first_node (CFGNode): first node of the current function
     """
     def __init__(self, name, first_node):
         self._func_name = name
         self._func_first_node = first_node
 
     def get_func_name(self):
+        """ Returns:
+                Current function name (string)
+        """
         return self._func_name
 
     def get_func_first_node(self):
+        """ Returns:
+                First node of the current function (CFGNode)
+        """
         return self._func_first_node
 
     def show(self, buf=sys.stdout, indent=2):
+        """ Display current function and all its nodes.
+
+            Args:
+                buf (file): file object to write CFG. If no file is provided,
+                    then writes in standard output.
+                indent (int): indentation to apply in each tree level
+        """
         lead = ' ' * indent
         buf.write((lead + 'entry point - %s\n') % self._func_name)
         if isinstance(self._func_first_node, CFGNode):
@@ -41,14 +57,25 @@ class CFGEntryNode(object):
 
 
 class CFGNode(object):
-    """ The basic structure for the CFG, this class
-        stores the main important data about what
-        this node represents in the context of a CFG.
+    """ The basic structure for the CFG, this class stores the main important
+        data about what this node represents in the context of a CFG. It also
+        keeps track from the main data which made it. In other words, elements
+        from pycparser AST are hold here to always know what parts of code were
+        wrapped in this node.
 
-        It also keeps track from the main data which
-        made it. In other words, elements from pycparser
-        AST are hold here to always know what parts of
-        code were wrapped in this node.
+        Attributes:
+            type (CFGNodeType): node type
+            start_line (int): node first line in C code
+            end_line (int): node last line in C code
+            func_owner (string): function name current node belongs to
+            call_func_name (string): function name that is being called
+            refnode (CFGNode): reference node for PSEUDO or CALL nodes
+            loop_wcec (int): loop WCEC
+            loop_iters (int): number of iterations in a loop
+            wcec (int): WCEC value
+            rwcec (int): RWCEC value
+            children (int): all children of the current node
+            ast_elem_list (list): list of pycparser/c_ast elements
     """
     def __init__(self, type):
         self._type = type
@@ -65,10 +92,15 @@ class CFGNode(object):
         self._ast_elem_list = []
 
     def set_type(self, type):
+        """ Set current node type
+
+            Args:
+                type (CFGNodeType): node type
+        """
         self._type = type
 
     def get_type(self):
-        """ return:
+        """ Returns:
                 CFGNodeType
         """
         return self._type
@@ -77,8 +109,8 @@ class CFGNode(object):
         """ Return node first line related to the first pycparser/c_ast element
             added.
 
-            return:
-                int
+            Returns:
+                Start line (int)
         """
         if self._start_line == 0 and self._ast_elem_list != []:
             self._start_line = self._ast_elem_list[0].coord.line
@@ -89,8 +121,8 @@ class CFGNode(object):
         """ Return node last line related to the last pycparser/c_ast element
             added.
 
-            return:
-                int
+            Returns:
+                Last line (int)
         """
         if self._end_line == 0 and self._ast_elem_list != []:
             self._end_line = self._ast_elem_list[-1].coord.line
@@ -98,31 +130,41 @@ class CFGNode(object):
         return self._end_line
 
     def set_func_owner(self, name):
+        """ Set the function name current node belongs to.
+
+            Args:
+                name (string): function name
+        """
         self._func_owner = name
 
     def get_func_owner(self):
-        """ Return function name that this node belongs to.
-
-            return:
-                string
+        """ Returns:
+                Return function name that this node belongs to (string)
         """
         return self._func_owner
 
     def set_call_func_name(self, name):
-        """ Keep function name and node that are called
-            by the current node.
+        """ Keep function name and node that are called by the current node.
+
+            Args:
+                name (string): the function name that is being called
         """
         self._call_func_name = name
 
     def get_call_func_name(self):
         """ Return function name that is being called.
 
-            return:
+            Returns:
                 string
         """
         return self._call_func_name
 
     def set_ref_node(self, node):
+        """ Set reference node for PSEUDO or CALL nodes
+
+            Args:
+                node (CFGNode): node that is being referenced to
+        """
         self._refnode = node
 
     def get_ref_node(self):
@@ -130,7 +172,7 @@ class CFGNode(object):
             function or loop it is pointing to. So, it could be a CFGNode or
             CFGEntryNode.
 
-            return:
+            Returns:
                 CFGNode if this node is PSEUDO or CFGEntryNode if it is CALL
         """
         return self._refnode
@@ -139,8 +181,8 @@ class CFGNode(object):
         """ Only PSEUDO nodes can have a value different of zero since
             reference node is the while-condition itself.
 
-            return:
-                WCEC of the loop
+            Returns:
+                WCEC of the loop (int)
         """
         if (self._type != CFGNodeType.PSEUDO or
                 not isinstance(self._refnode, CFGNode) or
@@ -150,11 +192,16 @@ class CFGNode(object):
         return self._refnode.get_rwcec() * self._refnode.get_loop_iters()
 
     def set_loop_iters(self, iters):
+        """ Set loop iterations number
+
+            Args:
+                iters (int): the value of loop iterations
+        """
         self._loop_iters = iters
 
     def get_loop_iters(self):
-        """ return:
-                The maximum number of loop iterations
+        """ Returns:
+                The maximum number of loop iterations (int)
         """
         if not isinstance(self._refnode, CFGNode):
             return self._loop_iters
@@ -162,6 +209,11 @@ class CFGNode(object):
         return self._refnode.get_loop_iters()
 
     def set_wcec(self, wcec):
+        """ Set WCEC
+
+            Args:
+                wcec (int): the value of WCEC
+        """
         self._wcec = wcec
 
     def get_wcec(self):
@@ -170,8 +222,8 @@ class CFGNode(object):
             to cycles to call plus the function RWCEC, or if it is of type
             PSEUDO, its wcec is equal to loop RWCEC times its iterations.
 
-            return:
-                int
+            Returns:
+                The value of WCEC
         """
         if (self._type == CFGNodeType.PSEUDO and
                 isinstance(self._refnode, CFGNode)):
@@ -185,51 +237,64 @@ class CFGNode(object):
         return self._wcec
 
     def set_rwcec(self, rwcec):
+        """ Set RWCEC
+
+            Args:
+                rwcec (int): the value of RWCEC
+        """
         self._rwcec = rwcec
 
     def get_rwcec(self):
         """ RWCEC means the remaining cycles to be executed until the WCEC of
             the worst case execution path of the CFG is completely consumed.
 
-            return:
-                int
+            Returns:
+                RWCEC (int)
         """
         return self._rwcec
 
     def add_child(self, child):
         """ Add a new child that current node points to.
 
-            child:
-                CFGNode
+            Args:
+                child (CFGNode): a new node to be added
         """
         self._children.append(child)
 
     def get_children(self):
         """ Return all children nodes.
 
-            return:
+            Returns:
                 List of CFGNodes
         """
         return self._children
 
     def add_ast_elem(self, ast_elem):
         """ A node is composed by one or more AST elements get from pycparser
-            AST.
+            AST. Add a new ast_elem to the list.
 
-            ast_elem:
-                pycparser/c_ast element class
+            Args:
+                ast_elem (pycparser/c_ast/element): pycparser/c_ast element class
         """
         self._ast_elem_list.append(ast_elem)
 
     def get_ast_elem_list(self):
         """ Return all AST elements that compose this node.
 
-            return:
+            Returns:
                 List of pycparser/c_ast elements
         """
         return self._ast_elem_list
 
     def show(self, buf=sys.stdout, indent=1, lead=''):
+        """ Display current node line and its children.
+
+            Args:
+                buf (file): file object to write CFG. If no file is provided,
+                    then writes in standard output.
+                indent (int): indentation to apply in each tree level
+                lead (string): the number of spaces that precedes current node
+        """
         lead += ' ' * indent
 
         msg = ((lead + '- %s, %d\n')
