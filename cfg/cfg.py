@@ -2,8 +2,7 @@ import sys
 
 from pycparser import parse_file
 
-from cfg_ast_visitor import CFGAstVisitor
-from cfg_wcec import CFGWCEC
+from . import cfg_ast_visitor, cfg_wcec
 
 
 class CFG(object):
@@ -41,13 +40,13 @@ class CFG(object):
                                 cpp_path='gcc',
                                 cpp_args=['-E'])
         # explore AST and make CFG
-        ast_visitor = CFGAstVisitor()
+        ast_visitor = cfg_ast_visitor.CFGAstVisitor()
         self._entry_nodes = ast_visitor.make_cfg_from_ast(self._ast)
         self._compute_wcec()
 
     def _compute_wcec(self):
-        cfg_wcec = CFGWCEC(self._filename, self)
-        cfg_wcec.compute_cfg_wcec()
+        wcec = cfg_wcec.CFGWCEC(self._filename, self)
+        wcec.compute_cfg_wcec()
 
     def show(self, buf=sys.stdout):
         for entry_point in self.get_entry_nodes():

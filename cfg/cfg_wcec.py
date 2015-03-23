@@ -77,7 +77,9 @@ class CFGWCEC(object):
             Returns:
                 List where each element is a line from assembler code.
         """
-        cpp_path = '../tools/toolschain/4.4.3/bin/arm-none-linux-gnueabi-gcc'
+        curdir = os.path.dirname(__file__)
+        cpp_path = os.path.join(curdir,
+                '../tools/toolschain/4.4.3/bin/arm-none-linux-gnueabi-gcc')
         cpp_args = ['-march=armv4t', '-g', '-S', '-o', '/dev/stdout']
         path_list = [cpp_path] + cpp_args + [cfile]
         text = []

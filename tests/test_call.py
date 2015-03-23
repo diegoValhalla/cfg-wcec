@@ -5,8 +5,8 @@ sys.path.insert(0, '..')
 
 from pycparser import parse_file, c_ast
 
-from src.cfg import CFG
-from src.cfg2graphml import CFG2Graphml
+from cfg import cfg, cfg2graphml
+
 
 # Test if statements
 #
@@ -26,10 +26,10 @@ class TestCall(unittest.TestCase):
         result_ok = self._find_file(test_name + '.cfg')
         result_check = self._find_file(test_name + '.cfg.check')
 
-        cfg = CFG(c_test_file)
-        cfg.make_cfg()
+        graph = cfg.CFG(c_test_file)
+        graph.make_cfg()
         with open(result_check, 'w') as f:
-            cfg.show(buf=f)
+            graph.show(buf=f)
 
         test_assert = False
         with open(result_check, 'rU') as check_file,\
@@ -48,10 +48,10 @@ class TestCall(unittest.TestCase):
         result_ok = self._find_file(test_name + '.graphml')
         result_check = self._find_file(test_name + '.graphml.check')
 
-        cfg = CFG(c_test_file)
-        cfg.make_cfg()
-        cfg2graph = CFG2Graphml()
-        cfg2graph.make_graphml(cfg, result_check, True)
+        graph = cfg.CFG(c_test_file)
+        graph.make_cfg()
+        cfg2graph = cfg2graphml.CFG2Graphml()
+        cfg2graph.make_graphml(graph, result_check, True)
 
         test_assert = False
         with open(result_check, 'rU') as check_file,\
