@@ -148,7 +148,7 @@ class CFGAstVisitor(object):
         if n.stmt is not None: self.visit(n.stmt)
 
         # get all stmt nodes without child and point them to while-cond
-        self._make_loop_cycle(cond, cond)
+        self._make_loop_cycle(cond, cond, {})
 
         # pseudo:   reference -> while-cond
         #           child -> other CFG nodes
@@ -214,12 +214,14 @@ class CFGAstVisitor(object):
                 if else_node.get_type() == CFGNodeType.IF:
                     else_node.set_type(CFGNodeType.ELSE_IF)
 
-    def _make_loop_cycle(self, cond, child):
+    def _make_loop_cycle(self, cond, child, visited):
+        visited[child] = True
         if child.get_children() == []:
             child.add_child(cond)
         else:
             for c in child.get_children():
-                self._make_loop_cycle(cond, c)
+                if c not in visited:
+                    self._make_loop_cycle(cond, c, visited)
 
     def _update_call(self):
         """ Explore all functions graphs to find CALL nodes and set its

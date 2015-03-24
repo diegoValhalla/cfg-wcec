@@ -47,5 +47,14 @@ int main() {
         }
     }
 
+    while(a < b) { // @LOOP 10
+        if (a < c) {
+            a = 3;
+        } else {
+            b = c;
+        }
+        a += b + c;
+    }
+
     return 0;
 }
