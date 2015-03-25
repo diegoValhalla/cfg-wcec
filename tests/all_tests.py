@@ -8,7 +8,8 @@ suite = unittest.TestLoader().loadTestsFromNames(
     [
         'test_if',
         'test_call',
-        'test_while'
+        'test_while',
+        'test_general'
     ]
 )
 
