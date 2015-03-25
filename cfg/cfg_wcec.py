@@ -252,8 +252,8 @@ class CFGWCEC(object):
             is_first_node = True if len(visited) == 1 else False
             wcec = 0
             for cline in clines:
-                if ((cline >= n.get_start_line() and cline <= n.get_end_line())
-                        or (is_first_node and cline <= n.get_end_line())):
+                if ((cline >= n.get_start_line() and cline <= n.get_last_line())
+                        or (is_first_node and cline <= n.get_last_line())):
                     for instr in cline_instr_table[func_name][cline]:
                         wcec += instr_cycle_table[instr]
                     del cline_instr_table[func_name][cline]

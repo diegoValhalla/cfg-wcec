@@ -389,7 +389,7 @@ class CFG2Graphml(object):
                 'attr.name': 'last_line',
                 'attr.type': 'int',
                 'default': '0',
-                'get_data': CFGNode.get_end_line.__name__
+                'get_data': CFGNode.get_last_line.__name__
             },
             {
                 'for': 'node',

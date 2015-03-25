@@ -66,7 +66,7 @@ class CFGNode(object):
         Attributes:
             type (CFGNodeType): node type
             start_line (int): node first line in C code
-            end_line (int): node last line in C code
+            last_line (int): node last line in C code
             func_owner (string): function name current node belongs to
             call_func_name (string): function name that is being called
             refnode (CFGNode): reference node for PSEUDO or CALL nodes
@@ -80,7 +80,7 @@ class CFGNode(object):
     def __init__(self, type):
         self._type = type
         self._start_line = 0
-        self._end_line = 0
+        self._last_line = 0
         self._func_owner = None
         self._call_func_name = None
         self._refnode = None
@@ -116,17 +116,17 @@ class CFGNode(object):
 
         return self._start_line
 
-    def get_end_line(self):
+    def get_last_line(self):
         """ Return node last line related to the last pycparser/c_ast element
             added.
 
             Returns:
                 Last line (int)
         """
-        if self._end_line == 0 and self._ast_elem_list != []:
-            self._end_line = self._ast_elem_list[-1].coord.line
+        if self._last_line == 0 and self._ast_elem_list != []:
+            self._last_line = self._ast_elem_list[-1].coord.line
 
-        return self._end_line
+        return self._last_line
 
     def set_func_owner(self, name):
         """ Set the function name current node belongs to.
