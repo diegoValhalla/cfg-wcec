@@ -241,7 +241,7 @@ class CFGWCEC(object):
 
         # visit loop
         if n.get_type() == CFGNodeType.PSEUDO:
-            self._compute_wcec_visited(n.get_ref_node(), visited,
+            self._compute_wcec_visited(n.get_refnode(), visited,
                     instr_cycle_table, cline_instr_table)
         else:
             func_name = n.get_func_owner()
@@ -327,24 +327,26 @@ class CFGWCEC(object):
         visited[n] = True
 
         # visit loop
-        if (n.get_type() == CFGNodeType.PSEUDO and
-                isinstance(n.get_ref_node(), CFGNode)):
-            self._compute_cfg_rwcec_visit(n.get_ref_node(), visited)
+        if (n.get_type() == CFGNodeType.PSEUDO
+                and isinstance(n.get_refnode(), CFGNode)):
+            self._compute_cfg_rwcec_visit(n.get_refnode(), visited)
 
-        # visit entry node that is called by current node
-        elif (n.get_type() == CFGNodeType.CALL and
-                isinstance(n.get_ref_node(), CFGEntryNode) and
-                isinstance(n.get_ref_node().get_func_first_node(), CFGNode)):
+        # visit entry node that is called by current node only once. So, if
+        # function rwcec is equal to zero, it was not visited yet.
+        elif (n.get_type() == CFGNodeType.CALL
+                and isinstance(n.get_refnode(), CFGEntryNode)
+                and isinstance(n.get_refnode().get_func_first_node(), CFGNode)
+                and n.get_refnode().get_func_first_node().get_rwcec() == 0):
             self._compute_cfg_rwcec_visit(
-                    n.get_ref_node().get_func_first_node(), visited)
+                    n.get_refnode().get_func_first_node(), visited)
 
         for child in n.get_children():
             if child not in visited:
                 self._compute_cfg_rwcec_visit(child, visited)
 
             if n.get_type() == CFGNodeType.PSEUDO:
-                if n.get_loop_wcec() + child.get_rwcec() > n.get_rwcec():
-                    n.set_rwcec(n.get_loop_wcec() + child.get_rwcec())
+                if n.get_refnode_rwcec() + child.get_rwcec() > n.get_rwcec():
+                    n.set_rwcec(n.get_refnode_rwcec() + child.get_rwcec())
             elif n.get_wcec() + child.get_rwcec() > n.get_rwcec():
                 n.set_rwcec(n.get_wcec() + child.get_rwcec())
 

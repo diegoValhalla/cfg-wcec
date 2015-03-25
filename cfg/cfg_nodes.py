@@ -84,7 +84,6 @@ class CFGNode(object):
         self._func_owner = None
         self._call_func_name = None
         self._refnode = None
-        self._loop_wcec = 0
         self._loop_iters = 0
         self._wcec = 0
         self._rwcec = 0
@@ -159,7 +158,7 @@ class CFGNode(object):
         """
         return self._call_func_name
 
-    def set_ref_node(self, node):
+    def set_refnode(self, node):
         """ Set reference node for PSEUDO or CALL nodes
 
             Args:
@@ -167,7 +166,7 @@ class CFGNode(object):
         """
         self._refnode = node
 
-    def get_ref_node(self):
+    def get_refnode(self):
         """ Reference node should be used by CALL or PSEUDO nodes to know the
             function or loop it is pointing to. So, it could be a CFGNode or
             CFGEntryNode.
@@ -177,19 +176,27 @@ class CFGNode(object):
         """
         return self._refnode
 
-    def get_loop_wcec(self):
-        """ Only PSEUDO nodes can have a value different of zero since
-            reference node is the while-condition itself.
+    def get_refnode_rwcec(self):
+        """ RWCEC of referenced node is applied in only two cases: when current
+            current node is a PSEUDO one or it is of type CALL. If it is
+            PSEUDO, its RWCEC is equal to loop RWCEC. However, if it is a CALL,
+            then its RWCEC is equal to the cycles to call (jump to) the function
+            plus the function RWCEC.
 
             Returns:
-                WCEC of the loop (int)
+                RWCEC of the reference node (int)
         """
-        if (self._type != CFGNodeType.PSEUDO or
-                not isinstance(self._refnode, CFGNode) or
-                self._refnode.get_loop_iters() == 0):
-            return 0
+        if (self._type == CFGNodeType.PSEUDO
+                and isinstance(self._refnode, CFGNode)
+                and self._refnode.get_loop_iters() != 0):
+            return self._refnode.get_rwcec() * self._refnode.get_loop_iters()
 
-        return self._refnode.get_rwcec() * self._refnode.get_loop_iters()
+        elif (self._type == CFGNodeType.CALL
+                and isinstance(self._refnode, CFGEntryNode)
+                and isinstance(self._refnode.get_func_first_node(), CFGNode)):
+            return self._refnode.get_func_first_node().get_rwcec()
+
+        return 0
 
     def set_loop_iters(self, iters):
         """ Set loop iterations number
@@ -218,9 +225,8 @@ class CFGNode(object):
 
     def get_wcec(self):
         """ WCEC is the sum of all cycles to executed the statements of this
-            node. However, if this node if of type CALL, then its WCEC is equal
-            to cycles to call plus the function RWCEC, or if it is of type
-            PSEUDO, its wcec is equal to loop RWCEC times its iterations.
+            node. However, if it is of type PSEUDO, its wcec is equal to loop
+            condition node, since PSEUDO nodes are kind of 'fake nodes'.
 
             Returns:
                 The value of WCEC
@@ -228,11 +234,11 @@ class CFGNode(object):
         if (self._type == CFGNodeType.PSEUDO and
                 isinstance(self._refnode, CFGNode)):
             return self._refnode.get_wcec()
-        elif (self._type == CFGNodeType.CALL and
-                isinstance(self._refnode, CFGEntryNode) and
-                isinstance(self._refnode.get_func_first_node(), CFGNode)):
-            return (self._wcec +
-                self._refnode.get_func_first_node().get_rwcec())
+
+        elif (self._type == CFGNodeType.CALL
+                and isinstance(self._refnode, CFGEntryNode)
+                and isinstance(self._refnode.get_func_first_node(), CFGNode)):
+            return self._wcec + self.get_refnode_rwcec()
 
         return self._wcec
 
@@ -302,7 +308,7 @@ class CFGNode(object):
         buf.write(msg)
 
         if self._type == CFGNodeType.PSEUDO:
-            self.get_ref_node().show(buf, indent, lead + '|') # write loop
+            self.get_refnode().show(buf, indent, lead + '|') # write loop
 
         for child in self._children:
             if child.get_type() == CFGNodeType.WHILE:

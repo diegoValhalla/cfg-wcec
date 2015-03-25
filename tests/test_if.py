@@ -22,7 +22,7 @@ class TestIf(unittest.TestCase):
 
         c_test_file = self._find_file(test_name + '.c')
         result_ok = self._find_file(test_name + '.cfg')
-        result_check = self._find_file(test_name + '.cfg.check')
+        result_check = self._find_file(test_name + '_check.cfg')
 
         graph = cfg.CFG(c_test_file)
         graph.make_cfg()
@@ -44,7 +44,7 @@ class TestIf(unittest.TestCase):
 
         c_test_file = self._find_file(test_name + '.c')
         result_ok = self._find_file(test_name + '.graphml')
-        result_check = self._find_file(test_name + '.graphml.check')
+        result_check = self._find_file(test_name + '_check.graphml')
 
         graph = cfg.CFG(c_test_file)
         graph.make_cfg()

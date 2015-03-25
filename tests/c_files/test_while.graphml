@@ -17,7 +17,7 @@
   <key attr.name="call" attr.type="string" for="node" id="k4">
     <default>none</default>
   </key>
-  <key attr.name="loop_wcec" attr.type="int" for="node" id="k5">
+  <key attr.name="refnode_wcec" attr.type="int" for="node" id="k5">
     <default>0</default>
   </key>
   <key attr.name="iterations" attr.type="int" for="node" id="k6">

@@ -171,7 +171,7 @@ class CFG2Graphml(object):
 
         # explore loop if current node is PSEUDO
         if n.get_type() == CFGNodeType.PSEUDO:
-            self._write_node(xml_graph, func_name, fid, n.get_ref_node(),
+            self._write_node(xml_graph, func_name, fid, n.get_refnode(),
                     len(visited), visited)
 
         # explore node children that were not visit yet
@@ -271,7 +271,7 @@ class CFG2Graphml(object):
 
         # explore loop if current one is PSEUDO
         if n.get_type() == CFGNodeType.PSEUDO:
-            loop_node = n.get_ref_node()
+            loop_node = n.get_refnode()
             eid = self._write_edge(xml_graph, fid, loop_node,
                     len(visited), eid, visited)
             self._write_edge_xml(xml_graph, fid, eid, n, nid, loop_node,
@@ -410,10 +410,10 @@ class CFG2Graphml(object):
             {
                 'for': 'node',
                 'id': 'k5',
-                'attr.name': 'loop_wcec',
+                'attr.name': 'refnode_wcec',
                 'attr.type': 'int',
                 'default': '0',
-                'get_data': CFGNode.get_loop_wcec.__name__
+                'get_data': CFGNode.get_refnode_rwcec.__name__
             },
             {
                 'for': 'node',

@@ -152,7 +152,7 @@ class CFGAstVisitor(object):
 
         # pseudo:   reference -> while-cond
         #           child -> other CFG nodes
-        pseudo.set_ref_node(cond)
+        pseudo.set_refnode(cond)
         self._current_node = pseudo
         self._create_new_node = True
 
@@ -241,10 +241,14 @@ class CFGAstVisitor(object):
         """
         visited[n] = True
 
-        if n.get_type() == CFGNodeType.CALL:
+        if n.get_type() == CFGNodeType.PSEUDO:
+            self._update_call_visit(n.get_refnode(), visited)
+
+        elif n.get_type() == CFGNodeType.CALL:
+            # update reference node to the right entry node
             for entry in self._entry_nodes:
                 if n.get_call_func_name() == entry.get_func_name():
-                    n.set_ref_node(entry)
+                    n.set_refnode(entry)
                     break
 
         for child in n.get_children():
@@ -287,7 +291,7 @@ class CFGAstVisitor(object):
                 break
 
         if node.get_type() == CFGNodeType.PSEUDO:
-            self._clean_graph_visit(node.get_ref_node(), visited)
+            self._clean_graph_visit(node.get_refnode(), visited)
 
         for child in node.get_children():
             if child not in visited:
