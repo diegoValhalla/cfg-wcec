@@ -1,0 +1,4 @@
+- Remove call nodes
+- Explain how CFG is made from AST
+- Explain CFG node structure (end-ifs, pseudos and call)
+- Explain what is and what is not supported

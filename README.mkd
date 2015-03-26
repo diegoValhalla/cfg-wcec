@@ -1,0 +1,97 @@
+cfg - Generating Control Flow Graph of C File
+=============================================
+
+cfg is a tool to generate the CFG - Control Flow Graph, of a given C file. It
+is based and use [pycparser][1] tool.
+
+pycparser parses the C code using [ply][2] (a tool that implements flex and
+bison in python) and creates the AST - Abstract Syntax Tree, from the given C
+file. Then, cfg takes the AST from pycparser and generates the control flow
+graph.
+
+Right now, cfg just uses three main statements: if-else, while, and call
+functions. Any other statement is not supported. Moreover, cfg, as in the
+title, is for one C file. If all the functions needed to your program are
+implemented in the source file, it should works =D. So, there is no support for
+any library calls.
+
+Note: pycparser is a submodule of cfg, however ply is a submodule of pycparser.
+
+cfg also supports [graphml][3] extension. That means you can get the CFG from
+the given C file and generate a graphml - graph xml format, to better see all
+the information from nodes and edges.
+
+Note: cfg was made in a Linux machine. Any tries to run it in a Windows or Mac
+OS X may not work without any changes.
+
+[1]: https://github.com/eliben/pycparser
+[2]: https://github.com/dabeaz/ply
+[3]: http://graphml.graphdrawing.org/
+
+Running cfg
+-----------
+
+To run cfg, just do:
+
+```
+python run_cfg.py <filename.c>
+```
+
+this command will parser your file, generates the CFG and write in standard
+output the .graphml by default.
+
+Note: you must change run\_cfg.py to write or not graphml into a file.
+
+cfg - Structure
+---------------
+
+project/
+    |
+    |--- cfg/ (all source code)
+    |       |--- cfg.py (holds CFG)
+    |       |--- cfg2graphml.py (write CFG in a graphml file)
+    |       |--- cfg_ast_visitor.py (explore the AST and make the CFG)
+    |       |--- cfg_nodes.py (defines nodes type and structure)
+    |       |--- cfg_wcec.py (computes WCEC and RWCEC based on assembler code)
+    |--- examples/ (examples of how to use cfg)
+    |--- tests/ (tests to run after each new change)
+    |--- tools/ (some third party tools useful for cfg)
+
+Note: cfg/cfg2graphml.py, cfg/cfg\_wcec.py and tools/ are completely
+independents of CFG genration. So, if you don't want to use them, just
+commented them.
+
+Examples
+--------
+
+Examples of how to use cfg are find in examples/.
+
+Running Tests
+-------------
+
+After any change and before commit, you must verify if cfg tests are still
+valid. So, just do the following command in the project root directory:
+
+```
+python tests/all_tests.py
+```
+
+If any test had failed, you must check if your implementation is ok or if you
+are changing how cfg make the graph and the need to update tests.
+
+Tools
+-----
+
+One of the things that cfg does is to compute for each node of the control flow
+graph its WCEC and RWCEC. Although, it is completly independent from the control
+flow graph generation and it can be commented in cfg.py file.
+
+By default, WCEC and RWCEC are computed together and these values are made from
+C file assembler code, this code is generated using armv4t as target. So, the
+tools directory keeps a version of [armv4t GCC][4] to compile the C file and
+get the assembler code.
+
+Since GCC for armv4t is a quite huge, its tarball was saved and must be
+extracted to cfg be able to compute WCEC and RWCEC.
+
+[4]: http://www.friendlyarm.net/downloads
