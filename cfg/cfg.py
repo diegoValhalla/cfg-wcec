@@ -36,6 +36,12 @@ class CFG(object):
         """
         return self._entry_nodes
 
+    def get_cfilename(self):
+        """ Returns:
+                C file name
+        """
+        return self._filename
+
     def get_ast(self):
         """ Returns:
                 Abstract syntax tree as pycparser/c_ast object
