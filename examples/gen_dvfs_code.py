@@ -14,7 +14,6 @@ def gen_cfg(filename=None):
 
     graph = cfg.CFG(filename)
     graph.make_cfg()
-    graph.show()
 
     # a new C file is generated at the same path of the given on, and it is
     # appending to its name "_dvfs" string
