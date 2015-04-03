@@ -66,7 +66,7 @@ class CFG_CDVFS(object):
 
         self._insert_dvfs_info(graph, clines) # explore CFG graph
         self._write_new_code(dvfsfilename, clines) # write to a file
-        self._copy_new_header(graph.get_cfilename())
+        self._copy_new_header(dvfsfilename)
 
     def _get_file_lines(self, filename):
         """ Read C code and create a list from its lines by enumerating all
@@ -284,7 +284,7 @@ class CFG_CDVFS(object):
             name = os.path.splitext(filename)[0]
             name = name + '_dvfs.c'
         try:
-            with open(filename, 'w') as f:
+            with open(name, 'w') as f:
                 for line, text in clines:
                     f.write(text)
         except IOError:
