@@ -1,6 +1,3 @@
-- Fix RWCEC problem in loop statements: RWCEC of the last loop node is not
-    according to loop condition
-- Add tests to cfg_cdvfs_generator.py
 - Remove call nodes
 - Explain how CFG is made from AST
 - Explain CFG node structure (end-ifs, pseudos and call)
