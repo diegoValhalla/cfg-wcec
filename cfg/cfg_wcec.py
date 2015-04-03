@@ -309,27 +309,35 @@ class CFGWCEC(object):
         for entry in cfg.get_entry_nodes():
             first_node = entry.get_func_first_node()
             if isinstance(first_node, CFGNode) and first_node.get_rwcec() == 0:
-                self._compute_cfg_rwcec_visit(entry.get_func_first_node(), {})
+                self._compute_cfg_rwcec_visit(entry.get_func_first_node(),
+                        {}, 1)
 
-    def _compute_cfg_rwcec_visit(self, n, visited):
-        """ Visit node children to get the greatest RWCEC and pass it to the
+    def _compute_cfg_rwcec_visit(self, n, visited, loop_iters):
+        """ Visit node's children to get the greatest RWCEC and pass it to the
             parent tree. First, check if node is a loop and get loop RWCEC.
-            Then, check if current node is a CALL, so visit the entry node.
-            After that, check if there is a child whose RWCEC plus current node
-            WCEC is greater than the current one, and change it if it is true.
+            Then, update all loop nodes according to its RWCEC. After that,
+            check if current node is a CALL, so visit the entry node. So, check
+            if there is a child whose RWCEC plus current node WCEC is greater
+            than the current one, and change it if it is true.
+
+            Note: nodes outside loop do not have iterations, so just use 1 as
+            default to make this code works for nodes outside and inside loops.
 
             Args:
                 n (CFGNode): node to be visit
-
                 visited (dic): dictionary which keeps all nodes that were
                     already visited
+                loop_iters (int): maximum number of loop iterations. By
+                    default, it is 1.
         """
         visited[n] = True
 
-        # visit loop
+        # explore loop and compute its RWCEC. Then, update its nodes RWCEC.
         if (n.get_type() == CFGNodeType.PSEUDO
                 and isinstance(n.get_refnode(), CFGNode)):
-            self._compute_cfg_rwcec_visit(n.get_refnode(), visited)
+            self._compute_cfg_rwcec_visit(n.get_refnode(), visited,
+                    n.get_loop_iters())
+            self._update_loop_rwcec(n.get_refnode(), {})
 
         # visit entry node that is called by current node only once. So, if
         # function rwcec is equal to zero, it was not visited yet.
@@ -342,18 +350,66 @@ class CFGWCEC(object):
 
         for child in n.get_children():
             if child not in visited:
-                self._compute_cfg_rwcec_visit(child, visited)
+                self._compute_cfg_rwcec_visit(child, visited, loop_iters)
 
-            if n.get_type() == CFGNodeType.PSEUDO:
+            # since while condition starts loop graph, it does not have RWCEC,
+            # so its WCEC is used instead
+            if child.get_type() == CFGNodeType.WHILE:
+                if ((n.get_wcec() + child.get_wcec()) * loop_iters >
+                        n.get_rwcec()):
+                    n.set_rwcec((n.get_wcec() + child.get_wcec()) * loop_iters)
+
+            # in a loop, its condition is always done in iterations + 1 times,
+            # because it is needed one more condition to break loop
+            elif n.get_type() == CFGNodeType.WHILE:
+                if n.get_wcec() + child.get_rwcec() > n.get_rwcec():
+                    n.set_rwcec(n.get_wcec() + child.get_rwcec())
+
+            # remember that PSEUDO is not a real node, so get all information
+            # from its reference node
+            elif n.get_type() == CFGNodeType.PSEUDO:
                 if n.get_refnode_rwcec() + child.get_rwcec() > n.get_rwcec():
                     n.set_rwcec(n.get_refnode_rwcec() + child.get_rwcec())
-            elif n.get_wcec() + child.get_rwcec() > n.get_rwcec():
-                n.set_rwcec(n.get_wcec() + child.get_rwcec())
 
-        # while condition must execute twice until it breaks the loop
-        if n.get_type() == CFGNodeType.WHILE:
-            n.set_rwcec(n.get_rwcec() + n.get_wcec())
+            # nodes outside loop do not have iterations, so just use 1 as
+            # default to make this code works for nodes outside and inside
+            # loops
+            elif n.get_wcec() * loop_iters + child.get_rwcec() > n.get_rwcec():
+                n.set_rwcec(n.get_wcec() * loop_iters + child.get_rwcec())
 
         # only a END node can have no children
         if n.get_children() == []:
             n.set_rwcec(n.get_wcec())
+
+    def _update_loop_rwcec(self, n, visited):
+        """ All the times loop RWCEC was right, however the nodes
+            inside it did not reflect properly their RWCEC. So, update all
+            nodes inside loop using its RWCEC.
+
+            First, explore all loop graph until find nodes whose child is the
+            WHILE condition node. Then, starts updating its RWCEC and their
+            parents one according to the loop RWCEC.
+
+            Args:
+                n (CFGNode): graph node
+                visited (dic): dictionary which keeps all nodes that were
+                    already visited
+        """
+        visited[n] = True
+
+        for child in n.get_children():
+            if child not in visited:
+                self._update_loop_rwcec(child, visited)
+
+            rwcec = 0
+            if (n.get_refnode() != child
+                    and child.get_type() == CFGNodeType.WHILE):
+                loop_max_rwcec = child.get_rwcec()
+                loop_one_run_rwcec = ((loop_max_rwcec - child.get_wcec()) /
+                                child.get_loop_iters())
+                rwcec = loop_max_rwcec - loop_one_run_rwcec + n.get_wcec()
+            else:
+                rwcec = child.get_rwcec() + n.get_wcec()
+
+            if rwcec > n.get_rwcec():
+                n.set_rwcec(rwcec)

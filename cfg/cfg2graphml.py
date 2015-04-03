@@ -291,6 +291,14 @@ class CFG2Graphml(object):
     def _write_edge_xml(self, xml_graph, fid, eid, n, nid, child, visited):
         """ Write edge attributes to graphml file.
 
+            Note: all nodes whose child is a WHILE, can not get its child RWCEC,
+            because RWCEC of a WHILE node is the value of the worst execution
+            of a loop. If current node has a WHILE as a child, so it is making
+            the loop cycle and all loop nodes were already executed once. Then,
+            the right RWCEC is the loop RWCEC minus the WCEC of one loop
+            iteration. This idea is applied only to nodes before loop condition
+            inside a loop.
+
             Args:
                 xml_graph (ElementTree.SubElement): graph tag of .graphml
                 fid (int): function id
@@ -306,23 +314,31 @@ class CFG2Graphml(object):
         xml_edge.set('source', visited[n])
         xml_edge.set('target', visited[child])
 
+        rwcec = 0
+        if n.get_refnode() != child and child.get_type() == CFGNodeType.WHILE:
+            loop_wcec = ((child.get_rwcec() - child.get_wcec()) /
+                            child.get_loop_iters())
+            rwcec = child.get_rwcec() - loop_wcec
+
         # add only rwcec key tag
         for key in self._node_keys:
             if key['attr.name'] == 'rwcec':
                 xml_data = ET.SubElement(xml_edge, 'data')
                 xml_data.set('key', key['id'])
                 try:
-                    method_name = key['get_data']
-                    method = getattr(child, method_name)
-                    xml_data.text = str(method()).lower()
+                    if rwcec == 0: # current node does not have a WHILE child
+                        method_name = key['get_data']
+                        method = getattr(child, method_name)
+                        rwcec = method()
                 except AttributeError:
-                    xml_data.text = key['default']
+                    rwcec = int(key['default'])
                 finally:
+                    xml_data.text = str(rwcec)
                     break
 
         # add graphical information
         if self._yed_output:
-            self._write_edge_yed(xml_edge, child.get_rwcec())
+            self._write_edge_yed(xml_edge, rwcec)
 
     def _write_edge_yed(self, xml_edge, rwcec):
         """ Define edge shape and position for graphical view

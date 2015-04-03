@@ -187,9 +187,8 @@ class CFGNode(object):
                 RWCEC of the reference node (int)
         """
         if (self._type == CFGNodeType.PSEUDO
-                and isinstance(self._refnode, CFGNode)
-                and self._refnode.get_loop_iters() != 0):
-            return self._refnode.get_rwcec() * self._refnode.get_loop_iters()
+                and isinstance(self._refnode, CFGNode)):
+            return self._refnode.get_rwcec()
 
         elif (self._type == CFGNodeType.CALL
                 and isinstance(self._refnode, CFGEntryNode)
