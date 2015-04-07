@@ -54,7 +54,7 @@ class CFGWCEC(object):
         """
         file_path = ''
         if asm_cycle_file is None:
-            curdir = os.path.dirname(__file__)
+            curdir = os.path.dirname(os.path.abspath(__file__))
             file_path = os.path.join(curdir, '_asm_cycle.txt')
 
         asm_cycle_table = {}
@@ -78,7 +78,7 @@ class CFGWCEC(object):
             Returns:
                 List where each element is a line from assembler code.
         """
-        curdir = os.path.dirname(__file__)
+        curdir = os.path.dirname(os.path.abspath(__file__))
         cpp_path = os.path.join(curdir,
                 '../tools/toolschain/4.4.3/bin/arm-none-linux-gnueabi-gcc')
         cpp_args = ['-march=armv4t', '-g', '-S', '-o', '/dev/stdout']

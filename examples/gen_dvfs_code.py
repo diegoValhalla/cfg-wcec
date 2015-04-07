@@ -11,7 +11,7 @@ from cfg import cfg, cfg_cdvfs_generator
 
 def gen_cfg(filename=None):
     if filename is None:
-        curdir = os.path.dirname(__file__)
+        curdir = os.path.dirname(os.path.abspath(__file__))
         filename = os.path.join(curdir, 'c_files', 'test.c')
 
     graph = cfg.CFG(filename)

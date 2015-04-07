@@ -281,10 +281,10 @@ class CFG_CDVFS(object):
                 clines (list): list of tuples (clines, text) from C code
         """
         if filename != '':
-            name = os.path.splitext(filename)[0]
-            name = name + '_dvfs.c'
+            filename = os.path.splitext(filename)[0]
+            filename = filename + '_dvfs.c'
         try:
-            with open(name, 'w') as f:
+            with open(filename, 'w') as f:
                 for line, text in clines:
                     f.write(text)
         except IOError:
