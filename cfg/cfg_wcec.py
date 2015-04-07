@@ -1,6 +1,7 @@
 import sys, os, re
 
-sys.path.insert(0, '..')
+thisdir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0,  os.path.join(thisdir, 'pycparser'))
 
 from subprocess import Popen, PIPE
 

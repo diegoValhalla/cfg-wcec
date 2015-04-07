@@ -1,6 +1,8 @@
 import sys, os
 
-sys.path.extend(['.', '..'])
+filedir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(filedir, '..'))
+sys.path.insert(0, os.path.join(filedir, '..', 'cfg', 'pycparser'))
 
 from pycparser import parse_file
 

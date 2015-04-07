@@ -1,3 +1,8 @@
+import sys, os
+
+thisdir = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0,  os.path.join(thisdir, 'pycparser'))
+
 from pycparser import c_parser, c_ast
 
 from cfg_nodes import CFGNodeType
