@@ -1,3 +1,4 @@
+- Change how to include packages in sys.path to make code faster
 - Remove call nodes
 - Explain how CFG is made from AST
 - Explain CFG node structure (end-ifs, pseudos and call)
