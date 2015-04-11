@@ -1,3 +1,7 @@
+- DVFS code generations in not right if an if-statement is less than the worst
+  case and its then-statement is also less than the worst case. So, there is
+  two frequency changes here, but only one can be applied, because it can not
+  change if-statement frequency before condition is executed
 - Change how to include packages in sys.path to make code faster
 - Remove call nodes
 - Explain how CFG is made from AST
