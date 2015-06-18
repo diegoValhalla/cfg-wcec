@@ -30,48 +30,54 @@ int main() {
         }
         a = c;
         c = b;
-    } else if (c < a) {
-        c = a;
-        foo();
-    } else if (b < a) {
-        foo();
-        while(a < b) { // @LOOP 10
-            a = 3;
-            b = c;
+    } else {
+        if (c < a) {
+            c = a;
             foo();
-            a += b + c;
-        }
-        a = c;
-        if (b < a) {
-            a = c;
-            c = b;
-        }
-        c = b;
-        while(a < b) { // @LOOP 10
+        } else {
             if (b < a) {
                 foo();
+                while(a < b) { // @LOOP 10
+                    a = 3;
+                    b = c;
+                    foo();
+                    a += b + c;
+                }
                 a = c;
+                if (b < a) {
+                    a = c;
+                    c = b;
+                }
+                c = b;
+                while(a < b) { // @LOOP 10
+                    if (b < a) {
+                        foo();
+                        a = c;
+                    }
+                    a = 3;
+                    b = c;
+                    a += b + c;
+                    foo();
+                }
+            } else {
+                if (c < b) {
+                    c = a;
+                    foo();
+                } else {
+                    a = c;
+                    c = b;
+                    while(a < b) { // @LOOP 10
+                        a = 3;
+                        foo();
+                        b = c;
+                        a += b + c;
+                    }
+                    if (b < a) {
+                        a = c;
+                        c = b;
+                    }
+                }
             }
-            a = 3;
-            b = c;
-            a += b + c;
-            foo();
-        }
-    } else if (c < b) {
-        c = a;
-        foo();
-    } else {
-        a = c;
-        c = b;
-        while(a < b) { // @LOOP 10
-            a = 3;
-            foo();
-            b = c;
-            a += b + c;
-        }
-        if (b < a) {
-            a = c;
-            c = b;
         }
     }
 

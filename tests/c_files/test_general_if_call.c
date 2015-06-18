@@ -23,27 +23,33 @@ int main() {
         }
         a = c;
         c = b;
-    } else if (c < a) {
-        foo();
-        c = a;
-    } else if (b < a) {
-        a = c;
-        if (b < a) {
-            a = c;
-            c = b;
-            foo();
-        }
-        c = b;
-    } else if (c < b) {
-        c = a;
-        foo();
     } else {
-        foo();
-        a = c;
-        c = b;
-        if (b < a) {
-            a = c;
-            c = b;
+        if (c < a) {
+            foo();
+            c = a;
+        } else {
+            if (b < a) {
+                a = c;
+                if (b < a) {
+                    a = c;
+                    c = b;
+                    foo();
+                }
+                c = b;
+            } else {
+                if (c < b) {
+                    c = a;
+                    foo();
+                } else {
+                    foo();
+                    a = c;
+                    c = b;
+                    if (b < a) {
+                        a = c;
+                        c = b;
+                    }
+                }
+            }
         }
     }
 

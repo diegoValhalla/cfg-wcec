@@ -12,23 +12,29 @@ int main() {
         }
         a = c;
         c = b;
-    } else if (c < a) {
-        c = a;
-    } else if (b < a) {
-        a = c;
-        if (b < a) {
-            a = c;
-            c = b;
-        }
-        c = b;
-    } else if (c < b) {
-        c = a;
     } else {
-        a = c;
-        c = b;
-        if (b < a) {
-            a = c;
-            c = b;
+        if (c < a) {
+            c = a;
+        } else {
+            if (b < a) {
+                a = c;
+                if (b < a) {
+                    a = c;
+                    c = b;
+                }
+                c = b;
+            } else {
+                if (c < b) {
+                    c = a;
+                } else {
+                    a = c;
+                    c = b;
+                    if (b < a) {
+                        a = c;
+                        c = b;
+                    }
+                }
+            }
         }
     }
 

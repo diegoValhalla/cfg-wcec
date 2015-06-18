@@ -209,15 +209,8 @@ class CFGAstVisitor(object):
 
         # if-then-else stmt:
         #   last else node -> end if node
-        elif len(children) == 2:
-            if isinstance(iffalse_last_node, CFGNode):
-                iffalse_last_node.add_child(end_node)
-
-                # else-if node: get else child and
-                # check if the first node is an if
-                else_node = cond_node.get_children()[1]
-                if else_node.get_type() == CFGNodeType.IF:
-                    else_node.set_type(CFGNodeType.ELSE_IF)
+        elif len(children) == 2 and isinstance(iffalse_last_node, CFGNode):
+            iffalse_last_node.add_child(end_node)
 
     def _make_loop_cycle(self, cond, child, visited):
         visited[child] = True

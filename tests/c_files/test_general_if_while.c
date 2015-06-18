@@ -17,41 +17,47 @@ int main() {
         }
         a = c;
         c = b;
-    } else if (c < a) {
-        c = a;
-    } else if (b < a) {
-        while(a < b) { // @LOOP 10
-            a = 3;
-            b = c;
-            a += b + c;
-        }
-        a = c;
-        if (b < a) {
-            a = c;
-            c = b;
-        }
-        c = b;
-        while(a < b) { // @LOOP 10
-            if (b < a) {
-                a = c;
-            }
-            a = 3;
-            b = c;
-            a += b + c;
-        }
-    } else if (c < b) {
-        c = a;
     } else {
-        a = c;
-        c = b;
-        while(a < b) { // @LOOP 10
-            a = 3;
-            b = c;
-            a += b + c;
-        }
-        if (b < a) {
-            a = c;
-            c = b;
+        if (c < a) {
+            c = a;
+        } else {
+            if (b < a) {
+                while(a < b) { // @LOOP 10
+                    a = 3;
+                    b = c;
+                    a += b + c;
+                }
+                a = c;
+                if (b < a) {
+                    a = c;
+                    c = b;
+                }
+                c = b;
+                while(a < b) { // @LOOP 10
+                    if (b < a) {
+                        a = c;
+                    }
+                    a = 3;
+                    b = c;
+                    a += b + c;
+                }
+            } else {
+                if (c < b) {
+                    c = a;
+                } else {
+                    a = c;
+                    c = b;
+                    while(a < b) { // @LOOP 10
+                        a = 3;
+                        b = c;
+                        a += b + c;
+                    }
+                    if (b < a) {
+                        a = c;
+                        c = b;
+                    }
+                }
+            }
         }
     }
 

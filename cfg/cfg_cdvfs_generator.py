@@ -130,8 +130,7 @@ class CFG_CDVFS(object):
         # explore node children that were not visited yet
         for child in n.get_children():
             if child not in visited:
-                if (n.get_type() == CFGNodeType.IF
-                        or n.get_type() == CFGNodeType.ELSE_IF):
+                if n.get_type() == CFGNodeType.IF:
                     self._check_typeB_edge(clines, n, child)
                 elif n.get_type() == CFGNodeType.PSEUDO:
                     self._check_typeL_edge(clines, n, child)
@@ -141,18 +140,11 @@ class CFG_CDVFS(object):
         """ Check if current child has a RWCEC less than the greatest RWCEC of
             a successor of current node. If it is, so this is a type-B edge.
 
-            Note: if child is an ELSE_IF node, the DVFS check must happen in
-            its first child (then-statement), because there is no way to change
-            frequency before a else-if condition.
-
             Args:
                 clines (list): list of tuples (clines, text) from C code
                 n (CFGNode): current node being visited
                 child (CFGNode): child of n
         """
-        if child.get_type() == CFGNodeType.ELSE_IF:
-            child = child.get_children()[0]
-
         succbi = n.get_rwcec() - n.get_wcec()
         bj = child.get_rwcec()
         bjline = child.get_start_line()
