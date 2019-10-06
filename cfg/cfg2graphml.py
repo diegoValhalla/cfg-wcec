@@ -316,8 +316,11 @@ class CFG2Graphml(object):
 
         rwcec = 0
         if n.get_refnode() != child and child.get_type() == CFGNodeType.WHILE:
-            loop_wcec = ((child.get_rwcec() - child.get_wcec()) /
-                            child.get_loop_iters())
+            iters = child.get_loop_iters()
+            if iters > 0:
+                loop_wcec = ((child.get_rwcec() - child.get_wcec()) / iters)
+            else:
+                loop_wcec = 0
             rwcec = child.get_rwcec() - loop_wcec
 
         # add only rwcec key tag

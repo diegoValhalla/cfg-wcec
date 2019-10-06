@@ -313,7 +313,7 @@ class CFGWCEC(object):
                 self._compute_cfg_rwcec_visit(entry.get_func_first_node(),
                         {}, 1)
 
-    def _compute_cfg_rwcec_visit(self, n, visited, loop_iters):
+    def _compute_cfg_rwcec_visit(self, n, visited, loop_iters=1):
         """ Visit node's children to get the greatest RWCEC and pass it to the
             parent tree. First, check if node is a loop and get loop RWCEC.
             Then, update all loop nodes according to its RWCEC. After that,
@@ -406,8 +406,11 @@ class CFGWCEC(object):
             if (n.get_refnode() != child
                     and child.get_type() == CFGNodeType.WHILE):
                 loop_max_rwcec = child.get_rwcec()
-                loop_one_run_rwcec = ((loop_max_rwcec - child.get_wcec()) /
-                                child.get_loop_iters())
+                iters = child.get_loop_iters()
+                if iters > 0:
+                    loop_one_run_rwcec = ((loop_max_rwcec - child.get_wcec()) / iters)
+                else:
+                    loop_one_run_rwcec = 0
                 rwcec = loop_max_rwcec - loop_one_run_rwcec + n.get_wcec()
             else:
                 rwcec = child.get_rwcec() + n.get_wcec()
